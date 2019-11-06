@@ -24,6 +24,18 @@ function campaignion_foundation_preprocess_html(&$vars) {
 }
 
 /**
+ * Modify block variables.
+ */
+function campaignion_foundation_preprocess_block(&$vars) {
+  // Remove wrapper class for disabled contextual links.
+  if (_campaignion_foundation_exclude_block_from_contextual_links($vars['block']->module)) {
+    if ($key = array_search('contextual-links-region', $vars['classes_array'])) {
+      unset($vars['classes_array'][$key]);
+    }
+  }
+}
+
+/**
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
@@ -35,4 +47,28 @@ function campaignion_foundation_css_alter(&$css) {
       unset($css[$path]);
     }
   }
+}
+
+/**
+ * Disable contextual links on certain blocks.
+ */
+function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
+  $block = $element['#element']['#block'] ?? NULL;
+  if ($block && _campaignion_foundation_exclude_block_from_contextual_links($block->module)) {
+    unset($element['#links']);
+  }
+}
+
+/**
+ * Helper function to keep blacklist for contextual links in one place.
+ */
+function _campaignion_foundation_exclude_block_from_contextual_links($module) {
+  $blacklist = [
+    'cck_blocks',
+    'webform_block',
+    'pgbar',
+    'recent_supporters',
+    'share_light',
+  ];
+  return in_array($module, $blacklist);
 }
