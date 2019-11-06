@@ -6,6 +6,7 @@
  */
 
 include 'includes/theme_menu_local_tasks.inc';
+include 'includes/theme_status_messages.inc';
 
 /**
  * Modify html variables, add assets.
