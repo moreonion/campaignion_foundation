@@ -22,3 +22,17 @@ function campaignion_foundation_preprocess_html(&$vars) {
     'requires_jquery' => FALSE,
   ]);
 }
+
+/**
+ * Remove annoying Drupal core CSS files.
+ */
+function campaignion_foundation_css_alter(&$css) {
+  $blacklist = ['webform.css'];
+  foreach ($css as $path => $values) {
+    // Remove blacklist and files where the name starts with "system"
+    // (e.g. system.base.css).
+    if (in_array(basename($path), $blacklist) || strpos(basename($path), 'system') === 0) {
+      unset($css[$path]);
+    }
+  }
+}
