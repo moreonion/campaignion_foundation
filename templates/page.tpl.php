@@ -85,9 +85,7 @@
         <?php endif; ?>
         <div class="top-bar-right">
           <?php if ($tabs = render($tabs)): ?>
-          <ul class="menu" role="menu">
-            <?php print render($tabs); ?>
-          </ul>
+          <?php print render($tabs); ?>
           <?php endif; ?>
           <?php print render($page['header']); ?>
         </div>

@@ -5,6 +5,8 @@
  * Template for the Campaignion Foundation Theme.
  */
 
+include 'includes/theme_menu_local_tasks.inc';
+
 /**
  * Modify html variables, add assets.
  */
