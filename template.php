@@ -63,6 +63,26 @@ function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
 }
 
 /**
+ * Override forms.
+ */
+function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
+  if (empty($form['actions']['#type']) || $form['actions']['#type'] !== 'actions') {
+    return;
+  }
+  // Add submit button classes.
+  $button_classes = ['small-only-expanded', 'primary', 'button'];
+  foreach (array_values($button_classes) as $class) {
+    $form['actions']['next']['#attributes']['class'][] = $class;
+    $form['actions']['submit']['#attributes']['class'][] = $class;
+  }
+  // Don’t wrap form buttons in container.
+  $form['actions']['#theme_wrappers'] = [];
+  // Hide step buttons.
+  $form['step_buttons']['#attributes']['class'][] = 'show-for-sr';
+  $form['actions']['previous']['#attributes']['class'][] = 'show-for-sr';
+}
+
+/**
  * Helper function to keep blacklist for contextual links in one place.
  */
 function _campaignion_foundation_exclude_block_from_contextual_links($module) {
