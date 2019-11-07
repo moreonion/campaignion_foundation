@@ -8,7 +8,8 @@
 /**
  * Implements theme_form_element().
  *
- * Replace description class: 'description' → 'help-text'.
+ * - Replace description class: 'description' → 'help-text'.
+ * - Omit wrapper for elements in input-groups.
  *
  * See drupal/includes/form.inc.
  */
@@ -46,7 +47,9 @@ function campaignion_foundation_form_element(&$variables) {
   if (!empty($element['#attributes']['disabled'])) {
     $attributes['class'][] = 'form-disabled';
   }
-  $output = '<div' . drupal_attributes($attributes) . '>' . "\n";
+
+  // Add wrapper unless the field is part of an input group.
+  $output = empty($element['#input_group']) ? '<div' . drupal_attributes($attributes) . '>' . "\n" : '';
 
   // If #title is not set, we don't display any label or required marker.
   if (!isset($element['#title'])) {
@@ -76,6 +79,6 @@ function campaignion_foundation_form_element(&$variables) {
   if (!empty($element['#description'])) {
     $output .= '<div class="help-text">' . $element['#description'] . "</div>\n";
   }
-  $output .= "</div>\n";
+  $output .= empty($element['#input_group']) ? "</div>\n" : '';
   return $output;
 }

@@ -62,3 +62,16 @@ html.js .js-hide {
   clear: both;
   visibility: hidden;
 }
+
+/**
+ * Styles needed for specific elements added by webform.
+ */
+input.webform-calendar {
+  display: none;
+  padding: 3px;
+  vertical-align: top;
+  align-self: center;
+}
+html.js input.webform-calendar {
+  display: inline;
+}
