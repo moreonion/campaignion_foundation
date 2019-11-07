@@ -5,8 +5,10 @@
  * Template for the Campaignion Foundation Theme.
  */
 
+include 'includes/theme_form_element.inc';
 include 'includes/theme_menu_local_tasks.inc';
 include 'includes/theme_status_messages.inc';
+include 'includes/theme_webform_element.inc';
 
 /**
  * Modify html variables, add assets.
