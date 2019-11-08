@@ -37,3 +37,7 @@ regions[widget] = Widget
 ; Stylesheets ----------------------------------------------------------------
 
 stylesheets[screen][] = campaignion_foundation.css
+
+; Scripts --------------------------------------------------------------------
+
+scripts[] = campaignion_foundation.js
