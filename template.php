@@ -11,6 +11,7 @@ include 'includes/theme_menu_local_tasks.inc';
 include 'includes/theme_status_messages.inc';
 include 'includes/theme_webform_date.inc';
 include 'includes/theme_webform_element.inc';
+include 'includes/theme_webform_managed_file.inc';
 include 'includes/theme_webform_time.inc';
 
 /**

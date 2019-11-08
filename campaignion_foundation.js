@@ -4,6 +4,15 @@
 
 (function ($) {
 
+Drupal.behaviors.campaignion_foundation = {};
+Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
+  // Fix for file upload with AJAX enabled.
+  // See https://www.drupal.org/project/drupal/issues/1513200
+  if (Drupal.file) {
+    $('input.form-submit', context).unbind('mousedown', Drupal.file.disableFields);
+  }
+}
+
 Drupal.behaviors.campaignion_foundation_clientside_validation = {};
 Drupal.behaviors.campaignion_foundation_clientside_validation.attach = function (context, settings) {
 
