@@ -33,6 +33,15 @@ function campaignion_foundation_preprocess_html(&$vars) {
 }
 
 /**
+ * Modify node variables.
+ */
+function campaignion_foundation_preprocess_node(&$vars) {
+  // Add 'content' class to attributes array instead of hardcoding it in the
+  // node template so more classes can be added if needed.
+  $vars['content_attributes_array']['class'][] = 'content';
+}
+
+/**
  * Modify block variables.
  */
 function campaignion_foundation_preprocess_block(&$vars) {
