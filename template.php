@@ -45,6 +45,9 @@ function campaignion_foundation_preprocess_node(&$vars) {
  * Modify block variables.
  */
 function campaignion_foundation_preprocess_block(&$vars) {
+  // Add 'content' class to attributes array instead of hardcoding it in the
+  // block template so more classes can be added if needed.
+  $vars['content_attributes_array']['class'][] = 'content';
   // Remove wrapper class for disabled contextual links.
   if (_campaignion_foundation_exclude_block_from_contextual_links($vars['block']->module)) {
     if ($key = array_search('contextual-links-region', $vars['classes_array'])) {
