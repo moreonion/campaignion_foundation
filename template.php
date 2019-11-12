@@ -54,6 +54,10 @@ function campaignion_foundation_preprocess_block(&$vars) {
       unset($vars['classes_array'][$key]);
     }
   }
+  // Hide language switcher block title.
+  if ($vars['block']->module == 'campaignion_language_switcher') {
+    $vars['title_attributes_array']['class'][] = 'show-for-sr';
+  }
 }
 
 /**
@@ -110,6 +114,7 @@ function _campaignion_foundation_exclude_block_from_contextual_links($module) {
     'pgbar',
     'recent_supporters',
     'share_light',
+    'campaignion_language_switcher',
   ];
   return in_array($module, $blacklist);
 }
