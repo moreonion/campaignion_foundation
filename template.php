@@ -39,6 +39,24 @@ function campaignion_foundation_preprocess_node(&$vars) {
   // Add 'content' class to attributes array instead of hardcoding it in the
   // node template so more classes can be added if needed.
   $vars['content_attributes_array']['class'][] = 'content';
+  // Add card classes to teasers.
+  if (!empty($vars['teaser'])) {
+    $vars['classes_array'][] = 'card';
+    $vars['header_attributes_array']['class'][] = 'card-section';
+    $vars['content_attributes_array']['class'][] = 'card-section';
+    $vars['footer_attributes_array']['class'][] = 'card-section';
+    $vars['content']['links']['#attributes']['class'][] = 'no-bullet';
+  }
+}
+
+/**
+ * Modify node processing.
+ */
+function campaignion_foundation_process_node(&$vars) {
+  // Render custom attribute arrays.
+  // See template_process() in drupal/includes/theme.inc.
+  $vars['header_attributes'] = !empty($vars['header_attributes_array']) ? drupal_attributes($vars['header_attributes_array']) : '';
+  $vars['footer_attributes'] = !empty($vars['footer_attributes_array']) ? drupal_attributes($vars['footer_attributes_array']) : '';
 }
 
 /**

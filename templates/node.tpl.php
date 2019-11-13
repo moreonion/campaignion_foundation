@@ -89,7 +89,7 @@
 <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
   <?php if ($user_picture || !$page || $display_submitted): ?>
-    <header>
+    <header<?php print $header_attributes; ?>>
       <?php print $user_picture; ?>
 
       <?php print render($title_prefix); ?>
@@ -116,7 +116,7 @@
   </div>
 
   <?php if (!empty($content['field_tags']) || !empty($content['links'])): ?>
-    <footer>
+    <footer<?php print $header_attributes; ?>>
       <?php print render($content['field_tags']); ?>
       <?php print render($content['links']); ?>
     </footer>

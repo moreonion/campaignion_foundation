@@ -11,7 +11,15 @@ Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
   if (Drupal.file) {
     $('input.form-submit', context).unbind('mousedown', Drupal.file.disableFields);
   }
-}
+};
+
+Drupal.behaviors.clickableTeasers = {};
+Drupal.behaviors.clickableTeasers.attach = function (context, settings) {
+  $('.node-teaser', context).click(function (event) {
+    event.preventDefault();
+    window.location.href = $('.node-readmore a', this).attr('href');
+  }).css('cursor', 'pointer');
+};
 
 Drupal.behaviors.campaignion_foundation_clientside_validation = {};
 Drupal.behaviors.campaignion_foundation_clientside_validation.attach = function (context, settings) {
