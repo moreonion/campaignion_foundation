@@ -113,6 +113,21 @@ function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
 }
 
 /**
+ * Override blocks.
+ */
+function campaignion_foundation_block_view_alter(&$data, $block) {
+  // Add button classes for share light blocks.
+  if ($block->module == 'share_light') {
+    $data['content']['#attributes']['class'][] = 'no-bullet';
+    foreach ($data['content']['#links'] as $channel => &$link) {
+      $link['attributes']['class'][] = 'share';
+      $link['attributes']['class'][] = 'button';
+      $link['attributes']['class'][] = 'expanded';
+    }
+  }
+}
+
+/**
  * Override forms.
  */
 function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
