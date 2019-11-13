@@ -79,6 +79,16 @@ function campaignion_foundation_preprocess_block(&$vars) {
 }
 
 /**
+ * Modify file entity variables.
+ */
+function campaignion_foundation_preprocess_file_entity(&$vars) {
+  // Add class for responsive videos.
+  if ($vars['type'] == 'video' && $vars['content']['file']['#theme'] !== 'image_style') {
+    $vars['classes_array'][] = 'responsive-embed';
+  }
+}
+
+/**
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
