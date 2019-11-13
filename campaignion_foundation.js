@@ -4,6 +4,7 @@
 
 (function ($) {
 
+// Theme specific JS.
 Drupal.behaviors.campaignion_foundation = {};
 Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
   // Fix for file upload with AJAX enabled.
@@ -13,6 +14,19 @@ Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
   }
 };
 
+// Initialize webform ajax slide.
+Drupal.behaviors.webformAjaxSlide = {};
+Drupal.behaviors.webformAjaxSlide.attach = function (context, settings) {
+    // Container id begins with webform-ajax-wrapper.
+  $('.webform-client-form', context).webformAjaxSlide({
+    loadingDummyMsg: Drupal.t('loading'),
+    onSlideBegin: function (ajaxOptions) {},
+    onSlideFinished: function (ajaxOptions) {},
+    onLastSlideFinished: function (ajaxOptions) {}
+  });
+}
+
+// Make node teasers clickable.
 Drupal.behaviors.clickableTeasers = {};
 Drupal.behaviors.clickableTeasers.attach = function (context, settings) {
   $('.node-teaser', context).click(function (event) {
@@ -21,6 +35,7 @@ Drupal.behaviors.clickableTeasers.attach = function (context, settings) {
   }).css('cursor', 'pointer');
 };
 
+// Custom clientside validation.
 Drupal.behaviors.campaignion_foundation_clientside_validation = {};
 Drupal.behaviors.campaignion_foundation_clientside_validation.attach = function (context, settings) {
 
