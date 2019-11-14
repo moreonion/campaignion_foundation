@@ -18,17 +18,19 @@ include 'includes/theme_webform_time.inc';
  * Modify html variables, add assets.
  */
 function campaignion_foundation_preprocess_html(&$vars) {
-  drupal_add_css(theme_get_setting('foundation_assets_css'), [
+  $query_string = variable_get('css_js_query_string', '0');
+  $css_path = theme_get_setting('foundation_assets_css');
+  drupal_add_css("$css_path?$query_string", [
     'type' => 'external',
     'group' => CSS_THEME,
     'every_page' => TRUE,
   ]);
-  drupal_add_js(theme_get_setting('foundation_assets_js'), [
+  $js_path = theme_get_setting('foundation_assets_js');
+  drupal_add_js("$js_path?$query_string", [
     'type' => 'external',
     'scope' => 'footer',
     'group' => JS_THEME,
     'every_page' => TRUE,
-    'requires_jquery' => FALSE,
   ]);
 }
 
