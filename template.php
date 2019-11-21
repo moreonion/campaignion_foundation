@@ -9,6 +9,8 @@ include 'includes/theme_form_element.inc';
 include 'includes/theme_form_element_label.inc';
 include 'includes/theme_menu_local_tasks.inc';
 include 'includes/theme_status_messages.inc';
+include 'includes/theme_pager.inc';
+include 'includes/theme_views_mini_pager.inc';
 include 'includes/theme_webform_date.inc';
 include 'includes/theme_webform_element.inc';
 include 'includes/theme_webform_managed_file.inc';
