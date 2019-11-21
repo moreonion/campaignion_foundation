@@ -22,7 +22,7 @@ function campaignion_foundation_status_messages($variables) {
     'warning' => ['heading' => t('Warning message'), 'class' => 'warning'],
   ];
   foreach (drupal_get_messages($variables['display']) as $type => $messages) {
-    $output .= '<div class="callout ' . ($status[$type]['class'] ?? $type) . "\">\n";
+    $output .= '<div class="callout ' . ($status[$type]['class'] ?? $type) . "\" data-closable>\n";
     if (!empty($status[$type]['heading'])) {
       $output .= '<h2 class="show-for-sr">' . $status[$type]['heading'] . "</h2>\n";
     }
@@ -36,6 +36,11 @@ function campaignion_foundation_status_messages($variables) {
     else {
       $output .= reset($messages);
     }
+    // Add close button.
+    $output .= '<button class="close-button" aria-label="Dismiss alert" type="button" data-close>' . "\n";
+    $output .= '<span aria-hidden="true">&times;</span>' . "\n";
+    $output .= "</button>\n";
+
     $output .= "</div>\n";
   }
   return $output;
