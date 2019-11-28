@@ -75,3 +75,14 @@ input.webform-calendar {
 html.js input.webform-calendar {
   display: inline;
 }
+
+/**
+ * Styles for the share via email form.
+ */
+form.share-page .filter-help,
+form.share-page .form-item-message-format {
+  display: none;
+}
+form.share-page textarea#edit-message-value {
+  min-height: 18em;
+}

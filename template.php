@@ -5,11 +5,13 @@
  * Template for the Campaignion Foundation Theme.
  */
 
+include 'includes/theme_filter_guidelines.inc';
 include 'includes/theme_form_element.inc';
 include 'includes/theme_form_element_label.inc';
 include 'includes/theme_menu_local_tasks.inc';
-include 'includes/theme_status_messages.inc';
 include 'includes/theme_pager.inc';
+include 'includes/theme_status_messages.inc';
+include 'includes/theme_text_format_wrapper.inc';
 include 'includes/theme_views_mini_pager.inc';
 include 'includes/theme_webform_date.inc';
 include 'includes/theme_webform_element.inc';
@@ -96,7 +98,7 @@ function campaignion_foundation_preprocess_file_entity(&$vars) {
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $blacklist = ['webform.css'];
+  $blacklist = ['webform.css', 'filter.css'];
   foreach ($css as $path => $values) {
     // Remove blacklist and files where the name starts with "system"
     // (e.g. system.base.css).
