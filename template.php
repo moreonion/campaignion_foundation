@@ -92,6 +92,10 @@ function campaignion_foundation_preprocess_file_entity(&$vars) {
   if ($vars['type'] == 'video' && $vars['content']['file']['#theme'] !== 'image_style') {
     $vars['classes_array'][] = 'responsive-embed';
   }
+  // Remove wrapper class for disabled contextual links.
+  if ($key = array_search('contextual-links-region', $vars['classes_array'])) {
+    unset($vars['classes_array'][$key]);
+  }
 }
 
 /**
@@ -109,11 +113,12 @@ function campaignion_foundation_css_alter(&$css) {
 }
 
 /**
- * Disable contextual links on certain blocks.
+ * Disable contextual links on certain elements: files, blacklisted blocks.
  */
 function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
+  $file = $element['#element']['#file'] ?? NULL;
   $block = $element['#element']['#block'] ?? NULL;
-  if ($block && _campaignion_foundation_exclude_block_from_contextual_links($block->module)) {
+  if ($file || ($block && _campaignion_foundation_exclude_block_from_contextual_links($block->module))) {
     unset($element['#links']);
   }
 }
