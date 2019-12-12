@@ -135,6 +135,7 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
       $link['attributes']['class'][] = 'share';
       $link['attributes']['class'][] = 'button';
       $link['attributes']['class'][] = 'expanded';
+      $link['attributes']['class'][] = $link['attributes']['data-share'] . '-icon';
     }
   }
 }
