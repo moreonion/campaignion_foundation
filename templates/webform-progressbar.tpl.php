@@ -4,6 +4,9 @@
  * @file
  * Display the progress bar for multipage forms.
  *
+ * NB: Some variables are not used as we always want to display the page/step
+ * number and page/step label. We also do not want to display percentages.
+ *
  * Available variables:
  * - $node: The webform node.
  * - $progressbar_page_number: TRUE if the actual page number should be
@@ -21,45 +24,39 @@
  * - $percent: The percentage complete.
  */
 ?>
-<div class="webform-progressbar">
-  <?php if ($progressbar_bar): ?>
-    <div class="webform-progressbar-outer">
-      <div class="webform-progressbar-inner" style="width: <?php print number_format($percent, 0); ?>%">&nbsp;</div>
-      <?php for ($n = 1; $n <= $page_count; $n++): ?>
-        <span class="webform-progressbar-page<?php
-          if ($n < $page_num):
-            print ' completed';
-          endif;
-          if ($n == $page_num):
-            print ' current';
-          endif;
-        ?>" style="<?php print ($GLOBALS['language']->direction == 0) ? 'left' : 'right'; ?>: <?php print number_format(($n - 1) / ($page_count - 1), 4) * 100; ?>%">
-          <span class="webform-progressbar-page-number"><?php print $n; ?></span>
-          <?php if ($progressbar_pagebreak_labels): ?>
-          <span class="webform-progressbar-page-label">
-            <?php print check_plain($page_labels[$n - 1]); ?>
-          </span>
-          <?php endif; ?>
+<?php if ($progressbar_bar) : ?>
+  <div class="form-steps-wrapper">
+    <div class="form-steps webform-progressbar" data-form-steps-total="<?php print $page_count ?>" data-form-steps-current="<?php print $page_num ?>">
+    <?php for ($n = 1; $n <= $page_count; $n++) : ?>
+      <?php
+        $classes = array();
+        if ($n == $page_num) {
+          $classes[] = 'current';
+        }
+        if ($n <= $page_num) {
+          $classes[] = 'active';
+        }
+        elseif ($n > $page_num) {
+          $classes[] = 'inactive';
+        }
+        if ($n == 1) {
+          $classes[] = 'first';
+        }
+        elseif ($n == $page_count) {
+          $classes[] = 'last';
+        };
+      ?>
+      <div class="step webform-progressbar-page <?php print implode(' ', $classes); ?>" data-form-step-number="<?php print $n; ?>">
+        <?php if ($progressbar_page_number): ?>
+        <span class="step-number"><?php print $n; ?></span>
+        <?php endif; ?>
+        <?php if ($progressbar_pagebreak_labels): ?>
+        <span class="step-label">
+          <?php print check_plain($page_labels[$n - 1]); ?>
         </span>
-      <?php endfor; ?>
+        <?php endif; ?>
+      </div>
+    <?php endfor; ?>
     </div>
-  <?php endif; ?>
-
-
-  <?php if ($progressbar_page_number): ?>
-    <div class="webform-progressbar-number">
-      <?php print t('Page @start of @end', array('@start' => $page_num, '@end' => $page_count)); ?>
-      <?php if ($progressbar_percent): ?>
-        <span class="webform-progressbar-number">
-          (<?php print number_format($percent, 0); ?>%)
-        </span>
-      <?php endif; ?>
-    </div>
-  <?php endif; ?>
-
-  <?php if (!$progressbar_page_number && $progressbar_percent): ?>
-    <div class="webform-progressbar-number">
-      <?php print number_format($percent, 0); ?>%
-    </div>
-  <?php endif; ?>
-</div>
+  </div>
+<?php endif; ?>
