@@ -161,6 +161,26 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
+ * Override element info.
+ */
+function campaignion_foundation_element_info_alter(&$type) {
+  // Add custom pre-render function to select elements.
+  if (isset($type['select'])) {
+    $type['select']['#pre_render'][] = '_campaignion_foundation_pre_render_select';
+  }
+}
+
+/**
+ * Add data-select-two attribute to select elements.
+ *
+ * This lets the Foundation SelectTwo plugin discover the select elements.
+ */
+function _campaignion_foundation_pre_render_select($element) {
+  $element['#attributes']['data-select-two'] = "select-two";
+  return $element;
+}
+
+/**
  * Helper function to keep blacklist for contextual links in one place.
  */
 function _campaignion_foundation_exclude_block_from_contextual_links($module) {
@@ -173,23 +193,4 @@ function _campaignion_foundation_exclude_block_from_contextual_links($module) {
     'campaignion_language_switcher',
   ];
   return in_array($module, $blacklist);
-}
-
-/**
- * Adds data-select-two attribute to select elements.
- *
- * This lets the Foundation SelectTwo plugin discover the select elements.
- */
-function _campaignion_foundation_pre_render_select($element) {
-  $element['#attributes']['data-select-two'] = "select-two";
-  return $element;
-}
-
-/**
- * Implements hook_element_info_alter().
- */
-function campaignion_foundation_element_info_alter(&$type) {
-  if (isset($type['select'])) {
-    $type['select']['#pre_render'][] = '_campaignion_foundation_pre_render_select';
-  }
 }
