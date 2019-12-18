@@ -16,6 +16,11 @@
     };
     var settings = $.extend({}, defaults, options);
 
+    // Return if no element was matched
+    if (!$(this).length) {
+      return this;
+    }
+
     var $element = $(this);
     var $radios = $element.find('input[type="radio"]');
     var $otherRadio = $element.find('input[value="select_or_other"]');
