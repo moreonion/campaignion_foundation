@@ -49,8 +49,10 @@
     }
     // Switch to selected other textfield when user clicks into it or
     // inputs/changes some data.
+    // Need to use 'input' (not 'change'), because other JS might trigger a
+    // change event on the textfield e.g. on page load (for prefilling).
     $otherText.on("click", clearRadios);
-    $otherText.on("change", clearRadios);
+    $otherText.on("input", clearRadios);
     $normalRadios.on("change", clearTextField);
 
     // return self for chaining
