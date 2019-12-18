@@ -115,7 +115,7 @@ Drupal.behaviors.payment_slide.attach = function (context, settings) {
       $forms.css({position: 'absolute', right: '0%', top: 0, margin: 0}).hide();
     }
 
-    var $submit_buttons = $wrapper.parents('form').find('.form-actions').appendTo($forms);
+    var $submit_buttons = $wrapper.parents('form').find('.button.primary').appendTo($forms);
 
     $selectorWrapper.find('label').click(function () {
       behavior.showForms = true;
