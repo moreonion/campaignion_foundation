@@ -41,4 +41,5 @@ stylesheets[screen][] = campaignion_foundation.css
 ; Scripts --------------------------------------------------------------------
 
 scripts[] = "js/jquery.webform-ajax-slide.js"
+scripts[] = "js/jquery.donation-buttons.js"
 scripts[] = campaignion_foundation.js
