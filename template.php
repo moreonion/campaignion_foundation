@@ -10,6 +10,7 @@ include 'includes/theme_form_element.inc';
 include 'includes/theme_form_element_label.inc';
 include 'includes/theme_menu_local_tasks.inc';
 include 'includes/theme_pager.inc';
+include 'includes/theme_recent_supporters.inc';
 include 'includes/theme_status_messages.inc';
 include 'includes/theme_text_format_wrapper.inc';
 include 'includes/theme_views_mini_pager.inc';
@@ -102,7 +103,7 @@ function campaignion_foundation_preprocess_file_entity(&$vars) {
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $blacklist = ['webform.css', 'filter.css'];
+  $blacklist = ['webform.css', 'filter.css', 'recent-supporters.css'];
   foreach ($css as $path => $values) {
     // Remove blacklist and files where the name starts with "system"
     // (e.g. system.base.css).
