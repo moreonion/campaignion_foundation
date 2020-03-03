@@ -33,11 +33,8 @@
         if ($n == $page_num) {
           $classes[] = 'current';
         }
-        if ($n <= $page_num) {
-          $classes[] = 'active';
-        }
-        elseif ($n > $page_num) {
-          $classes[] = 'inactive';
+        if ($n < $page_num) {
+          $classes[] = 'previous';
         }
         if ($n == 1) {
           $classes[] = 'first';
