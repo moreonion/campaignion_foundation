@@ -12,6 +12,8 @@ Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
   if (Drupal.file) {
     $('input.form-submit', context).unbind('mousedown', Drupal.file.disableFields);
   }
+  // Initialize other donation amount textfield selection behavior.
+  $('.donation-amount', context).donationButtons();
 };
 
 // Initialize webform ajax slide.
