@@ -25,11 +25,13 @@ settings[foundation_assets_js] = 'https://cdn.jsdelivr.net/npm/foundation-sites/
 regions[header] = Header
 regions[help] = Help
 regions[highlighted] = Highlighted
+regions[top] = Page top
 regions[content_top] = Content top
 regions[content] = Content
 regions[content_bottom] = Content bottom
-regions[sidebar_first]  = Left sidebar
+regions[sidebar_first]  = Sidebar top
 regions[sidebar_second] = Sidebar
+regions[bottom] = Page bottom
 regions[footer] = Footer
 
 regions[widget] = Widget

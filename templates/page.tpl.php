@@ -71,11 +71,14 @@
  *
  * @ingroup themeable
  */
+
+  // Helper variables:
+  $no_sidebar = empty($page['sidebar_first']) && empty($page['sidebar_second']);
 ?>
   <div id="page">
 
-    <section id="header" class="grid-container-fluid">
-      <div class="top-bar">
+    <section id="header">
+      <div class="top-bar grid-container">
         <?php if ($logo): ?>
         <div class="top-bar-left">
           <a class="logo" href="<?php print $front_page; ?>" rel="home">
@@ -93,33 +96,25 @@
     </section>
 
     <?php if (!empty($page['highlighted'])): ?>
-    <section id="highlighted" class="grid-container-fluid">
-      <div class="grid-x grid-padding-x grid-padding-y">
-        <div class="cell">
-          <?php print render($page['highlighted']); ?>
-        </div>
+    <section id="highlighted">
+      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+        <?php print render($page['highlighted']); ?>
       </div>
     </section>
     <?php endif; ?>
 
-    <section id="main" class="grid-container-fluid">
-      <div class="grid-x grid-padding-x grid-padding-y">
+    <?php if ($messages): ?>
+    <section id="messages">
+      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+        <?php print $messages; ?>
+      </div>
+    </section>
+    <?php endif; ?>
 
-        <?php if (!empty($page['sidebar_first']) || !empty($page['sidebar_second'])): ?>
-        <div class="cell medium-9 medium-offset-1 large-offset-0 large-5 small-order-1 large-order-2">
-          <?php print render($page['sidebar_first']); ?>
-          <?php print render($page['sidebar_second']); ?>
-        </div>
-        <?php endif; ?>
+    <section id="main">
+      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ' with-sidebar'); ?>">
 
-        <div class="cell medium-9 medium-offset-1 <?php print (!empty($page['sidebar_first']) || !empty($page['sidebar_second'])) ? ' small-order-2 large-order-1 large-offset-0 large-auto' : '' ?>">
-
-          <?php if ($messages): ?>
-          <div id="messages">
-            <?php print $messages; ?>
-          </div>
-          <?php endif; ?>
-
+        <div id="top">
           <?php if ($title): ?>
           <?php print render($title_prefix); ?>
           <h1 id="page-title"><?php print $title; ?></h1>
@@ -133,6 +128,17 @@
             </ul>
           <?php endif; ?>
 
+          <?php print render($page['top']); ?>
+        </div>
+
+        <?php if (!$no_sidebar): ?>
+        <div id="sidebar">
+          <?php print render($page['sidebar_first']); ?>
+          <?php print render($page['sidebar_second']); ?>
+        </div>
+        <?php endif; ?>
+
+        <div id="content">
           <?php print render($page['content_top']); ?>
           <?php print render($page['content']); ?>
           <?php print render($page['content_bottom']); ?>
@@ -141,12 +147,18 @@
       </div>
     </section>
 
+    <?php if (!empty($page['bottom'])): ?>
+    <section id="bottom">
+      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+        <?php print render($page['bottom']); ?>
+      </div>
+    </section>
+    <?php endif; ?>
+
     <?php if (!empty($page['footer'])): ?>
-    <section id="footer" class="grid-container-fluid">
-      <div class="grid-x grid-padding-x grid-padding-y">
-        <div class="cell">
-          <?php print render($page['footer']); ?>
-        </div>
+    <section id="footer">
+      <div class="grid-container">
+        <?php print render($page['footer']); ?>
       </div>
     </section>
     <?php endif; ?>
