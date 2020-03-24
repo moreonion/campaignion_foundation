@@ -149,7 +149,7 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
     return;
   }
   // Edit submit button classes.
-  $classes = ['small-only-expanded', 'primary', 'button'];
+  $classes = ['expanded', 'primary', 'button'];
   foreach (array_values(['next', 'submit']) as $type) {
     $button_classes = &$form['actions'][$type]['#attributes']['class'];
     // Add submit button classes.
