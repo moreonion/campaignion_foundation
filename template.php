@@ -148,11 +148,17 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   if (empty($form['actions']['#type']) || $form['actions']['#type'] !== 'actions') {
     return;
   }
-  // Add submit button classes.
-  $button_classes = ['small-only-expanded', 'primary', 'button'];
-  foreach (array_values($button_classes) as $class) {
-    $form['actions']['next']['#attributes']['class'][] = $class;
-    $form['actions']['submit']['#attributes']['class'][] = $class;
+  // Edit submit button classes.
+  $classes = ['expanded', 'primary', 'button'];
+  foreach (array_values(['next', 'submit']) as $type) {
+    $button_classes = &$form['actions'][$type]['#attributes']['class'];
+    // Add submit button classes.
+    foreach (array_values($classes) as $class) {
+      $button_classes[] = $class;
+    }
+    // Remove `button-primary` class added by webform. We use just `primary`.
+    $x = array_search('button-primary', $button_classes);
+    unset($button_classes[$x]);
   }
   // Don’t wrap form buttons in container.
   $form['actions']['#theme_wrappers'] = [];
