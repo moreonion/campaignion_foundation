@@ -26,7 +26,6 @@ function campaignion_foundation_recent_supporters($variables) {
 
   if (count($supporters) < 1) {
     $output .= '<div class="no-activity-yet"><p>' . t('No recent activity.') . '</p></div>';
-    return $output;
   }
   else {
     $classes = ['no-bullet', 'recent-supporters'];
