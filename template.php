@@ -131,12 +131,13 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
   // Add button classes for share light blocks.
   if ($block->module == 'share_light') {
     $data['content']['#attributes']['class'][] = 'no-bullet';
-    $links = &$data['content']['#links'] ?? [];
-    foreach ($links as $channel => &$link) {
-      $link['attributes']['class'][] = 'share';
-      $link['attributes']['class'][] = 'button';
-      $link['attributes']['class'][] = 'expanded';
-      $link['attributes']['class'][] = $link['attributes']['data-share'] . '-icon';
+    if (isset($data['content']['#links'])) {
+      foreach ($data['content']['#links'] as &$link) {
+        $link['attributes']['class'][] = 'share';
+        $link['attributes']['class'][] = 'button';
+        $link['attributes']['class'][] = 'expanded';
+        $link['attributes']['class'][] = $link['attributes']['data-share'] . '-icon';
+      }
     }
   }
 }
