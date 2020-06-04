@@ -89,9 +89,14 @@ function campaignion_foundation_preprocess_block(&$vars) {
  * Modify file entity variables.
  */
 function campaignion_foundation_preprocess_file_entity(&$vars) {
-  // Add class for responsive videos.
+  // Add class for responsive videos and full-width images.
   if ($vars['type'] == 'video' && $vars['content']['file']['#theme'] !== 'image_style') {
     $vars['classes_array'][] = 'responsive-embed';
+    $vars['classes_array'][] = 'widescreen';
+    $vars['classes_array'][] = 'media-stretch';
+  }
+  if (($vars['content']['file']['#image_style'] ?? '') == 'full') {
+    $vars['classes_array'][] = 'media-stretch';
   }
   // Remove wrapper class for disabled contextual links.
   if ($key = array_search('contextual-links-region', $vars['classes_array'])) {
