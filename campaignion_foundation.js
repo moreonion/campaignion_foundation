@@ -41,8 +41,12 @@ Drupal.behaviors.clickableTeasers.attach = function (context, settings) {
 Drupal.behaviors.campaignion_foundation_clientside_validation = {};
 Drupal.behaviors.campaignion_foundation_clientside_validation.attach = function (context, settings) {
 
-  // Helper function for finding the top/last wrapper of radio and checkbox fields.
+  // Helper function for finding the top/last wrapper of radio and checkbox fields
+  // and the select2 element for selects using select2.
   function findWrapper ($element) {
+    if ($element.is('select') && $element.siblings('.select2-container').length) {
+      return $element.siblings('.select2-container');
+    }
     if (!($element.is(':radio') || $element.is(':checkbox'))) {
       return $element;
     }
@@ -60,11 +64,7 @@ Drupal.behaviors.campaignion_foundation_clientside_validation.attach = function 
   $('form', context).on('clientsideValidationInitialized', function() {
     // Register custom error function with clientside validation.
     Drupal.myClientsideValidation['campaignion_foundation_errors'] = function (error, element) {
-      $(error).addClass('form-error is-visible');
-      if ($(element).is(':radio') || $(element).is(':checkbox')) {
-        $(error).css('margin-top', 0);
-      }
-      $(error).insertAfter(findWrapper($(element)));
+      $(error).addClass('form-error is-visible').insertAfter(findWrapper($(element)));
     }
   });
 
