@@ -107,6 +107,24 @@ function campaignion_foundation_preprocess_file_entity(&$vars) {
 }
 
 /**
+ * Modify webform form variables.
+ */
+function campaignion_foundation_preprocess_webform_form(&$vars) {
+  // Remove webform fields that start with 'below_button' from the form and push
+  // them to the end of the form array so they are rendered after the buttons.
+  $identifier = 'below_button';
+  $below_button = array();
+  foreach ($vars['form']['submitted'] as $key => $value) {
+    if (substr($key, 0, strlen($identifier)) === $identifier) {
+      $below_button[$key] = $value;
+      unset($vars['form']['submitted'][$key]);
+    }
+  }
+  $vars['form']['below_button'] = $below_button;
+}
+
+
+/**
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
