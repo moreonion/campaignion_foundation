@@ -140,6 +140,7 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
     $data['content']['#attributes']['class'][] = 'no-bullet';
     if (isset($data['content']['#links'])) {
       foreach ($data['content']['#links'] as &$link) {
+        $link['attributes']['class'][] = 'large';
         $link['attributes']['class'][] = 'share';
         $link['attributes']['class'][] = 'button';
         $link['attributes']['class'][] = 'expanded';
@@ -157,7 +158,7 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
     return;
   }
   // Edit submit button classes.
-  $classes = ['expanded', 'primary', 'button'];
+  $classes = ['large', 'expanded', 'primary', 'button'];
   foreach (array_values(['next', 'submit']) as $type) {
     $button_classes = &$form['actions'][$type]['#attributes']['class'];
     // Add submit button classes.
