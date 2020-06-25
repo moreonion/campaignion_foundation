@@ -5,6 +5,8 @@
  * Template for the Campaignion Foundation Theme.
  */
 
+use Drupal\little_helpers\ElementTree;
+
 include 'includes/theme_filter_guidelines.inc';
 include 'includes/theme_form_element.inc';
 include 'includes/theme_form_element_label.inc';
@@ -171,6 +173,18 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   // Hide step buttons.
   $form['step_buttons']['#attributes']['class'][] = 'show-for-sr';
   $form['actions']['previous']['#attributes']['class'][] = 'show-for-sr';
+
+  // Add wrapper class for extra space on some form elements.
+  $elements = $form;
+  if (!empty($form['submitted'])) {
+    $elements = &$form['submitted'];
+  }
+  ElementTree::applyRecursively($elements, function (&$element, $key, &$parent) {
+    $element_types = ['radio', 'checkbox', 'radios', 'checkboxes'];
+    if (in_array($element['#type'] ?? '', $element_types)) {
+      $element['#wrapper_attributes']['class'][] = 'extra-spacing';
+    }
+  });
 }
 
 /**
