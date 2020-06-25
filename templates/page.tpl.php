@@ -74,6 +74,7 @@
 
   // Helper variables:
   $no_sidebar = empty($page['sidebar_first']) && empty($page['sidebar_second']);
+  $form_blocks = ['cck_blocks_field_form_intro', 'cck_blocks_pgbar_default', 'webform_block_current'];
 ?>
   <div id="page">
 
@@ -134,6 +135,13 @@
         <?php if (!$no_sidebar): ?>
         <div id="sidebar">
           <?php print render($page['sidebar_first']); ?>
+          <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
+            <div id="form">
+              <?php foreach ($existing_form_blocks as $block): ?>
+                <?php print render($page['sidebar_second'][$block]); ?>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
           <?php print render($page['sidebar_second']); ?>
         </div>
         <?php endif; ?>
