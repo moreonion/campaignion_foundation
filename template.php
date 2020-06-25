@@ -189,6 +189,19 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
+ * Override webform components.
+ */
+function campaignion_foundation_webform_component_render_alter(&$element, $component) {
+  // Add extra classes for donation amount radios.
+  if ($element['#webform_component']['form_key'] == 'donation_amount') {
+    if (in_array($element['#type'], ['radios', 'select_or_other'])) {
+      $element['#wrapper_attributes']['class'][] = 'donation-amount';
+      $element['#attributes']['class'][] = 'donation-amount-buttons';
+    }
+  }
+}
+
+/**
  * Override element info.
  */
 function campaignion_foundation_element_info_alter(&$type) {
