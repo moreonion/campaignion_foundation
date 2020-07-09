@@ -127,6 +127,24 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
   $vars['form']['below_button'] = $below_button;
 }
 
+/**
+ * Modify campaignion language switcher variables.
+ */
+function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
+  // Save active link separate from the rest.
+  $active_link = NULL;
+  foreach ($vars['links'] as $key => &$link) {
+    if (in_array('active', $link['li_attributes']['class'])) {
+      $active_link = $link;
+      unset($vars['links'][$key]);
+      break;
+    }
+  }
+  $vars['active_link'] = $active_link;
+  // Add classes.
+  $vars['classes_array'][] = 'dropdown';
+  $vars['classes_array'][] = 'menu';
+}
 
 /**
  * Remove annoying Drupal core CSS files.
@@ -138,6 +156,18 @@ function campaignion_foundation_css_alter(&$css) {
     // (e.g. system.base.css).
     if (in_array(basename($path), $exclude) || strpos(basename($path), 'system') === 0) {
       unset($css[$path]);
+    }
+  }
+}
+
+/**
+ * Remove annoying Drupal core JS files.
+ */
+function campaignion_foundation_js_alter(&$js) {
+  $exclude = ['campaignion_language_switcher.js'];
+  foreach ($js as $path => $values) {
+    if (in_array(basename($path), $exclude)) {
+      unset($js[$path]);
     }
   }
 }
@@ -167,6 +197,17 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
         $link['attributes']['class'][] = 'button';
         $link['attributes']['class'][] = 'expanded';
         $link['attributes']['class'][] = $link['attributes']['data-share'] . '-icon';
+      }
+    }
+  }
+  // Remove disabled links from campaignion language switcher blocks.
+  if ($block->module == 'campaignion_language_switcher') {
+    if (isset($data['content']['#links'])) {
+      $links = &$data['content']['#links'];
+      foreach ($links as $key => $link) {
+        if (empty($link['href'])) {
+          unset($links[$key]);
+        }
       }
     }
   }
