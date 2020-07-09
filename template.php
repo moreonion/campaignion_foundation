@@ -85,7 +85,7 @@ function campaignion_foundation_preprocess_block(&$vars) {
   if ($vars['block']->module == 'campaignion_language_switcher') {
     $vars['title_attributes_array']['class'][] = 'show-for-sr';
   }
-  // Add classes to blocks
+  // Add classes to blocks.
   if ($vars['block']->module == 'share_light') {
     $vars['classes_array'][] = 'share-buttons';
   }
@@ -132,18 +132,18 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $blacklist = ['webform.css', 'filter.css', 'recent-supporters.css'];
+  $exclude = ['webform.css', 'filter.css', 'recent-supporters.css'];
   foreach ($css as $path => $values) {
-    // Remove blacklist and files where the name starts with "system"
+    // Remove exclusion list and files where the name starts with "system"
     // (e.g. system.base.css).
-    if (in_array(basename($path), $blacklist) || strpos(basename($path), 'system') === 0) {
+    if (in_array(basename($path), $exclude) || strpos(basename($path), 'system') === 0) {
       unset($css[$path]);
     }
   }
 }
 
 /**
- * Disable contextual links on certain elements: files, blacklisted blocks.
+ * Disable contextual links on certain elements: files, excluded blocks.
  */
 function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
   $file = $element['#element']['#file'] ?? NULL;
@@ -244,10 +244,10 @@ function _campaignion_foundation_pre_render_select($element) {
 }
 
 /**
- * Helper function to keep blacklist for contextual links in one place.
+ * Helper function to keep exclusion list for contextual links in one place.
  */
 function _campaignion_foundation_exclude_block_from_contextual_links($module) {
-  $blacklist = [
+  $exclude = [
     'cck_blocks',
     'webform_block',
     'pgbar',
@@ -255,5 +255,5 @@ function _campaignion_foundation_exclude_block_from_contextual_links($module) {
     'share_light',
     'campaignion_language_switcher',
   ];
-  return in_array($module, $blacklist);
+  return in_array($module, $exclude);
 }
