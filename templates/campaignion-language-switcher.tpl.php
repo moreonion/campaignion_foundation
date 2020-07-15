@@ -14,6 +14,12 @@
  * @ingroup themeable
  */
 ?>
+<?php
+  // If there aren’t any links, there’s no need for a language switcher.
+  if (!$links) {
+    return;
+  }
+?>
 <nav>
   <ul class="<?php print $classes; ?>" data-dropdown-menu>
     <li<?php print drupal_attributes($active_link['li_attributes']); ?>><?php print render($active_link['renderable']); ?>
