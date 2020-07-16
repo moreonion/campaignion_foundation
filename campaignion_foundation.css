@@ -86,3 +86,15 @@ form.share-page .form-item-message-format {
 form.share-page textarea#edit-message-value {
   min-height: 18em;
 }
+
+/**
+ * Fixes for ae-admin.
+ */
+#ae-bar,
+#ae-popups,
+#ae-widepoups {
+  box-sizing: content-box;
+}
+#ae-popups .sidepopup .menu a {
+  width: 100%;
+}
