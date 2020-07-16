@@ -43,7 +43,7 @@
           $classes[] = 'last';
         };
       ?>
-      <div class="step webform-progressbar-page <?php print implode(' ', $classes); ?>" data-form-step-number="<?php print $n; ?>">
+      <div class="step webform-progressbar-page <?php print implode(' ', $classes); ?>" data-form-step-number="<?php print $n; ?>" title="<?php print check_plain($page_labels[$n - 1]); ?>">
         <?php if ($progressbar_page_number): ?>
         <span class="step-number"><?php print $n; ?></span>
         <?php endif; ?>
