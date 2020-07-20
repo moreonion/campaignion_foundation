@@ -132,14 +132,31 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
  */
 function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
   // Save active link separate from the rest.
-  $active_link = NULL;
-  foreach ($vars['links'] as $key => &$link) {
-    if (in_array('active', $link['li_attributes']['class'])) {
-      $active_link = $link;
-      unset($vars['links'][$key]);
-      break;
+  // (With GeoIP enabled, the path might not match the actual node path and no
+  // link is considered active, therefore we have to fake a default active link.)
+  $active_link = [
+    'renderable' => [
+      '#text' => t('Choose country'),
+      '#path' => '#',
+      '#theme' => 'link',
+      '#options' => ['attributes' => []],
+    ],
+  ];
+  // If there is just one link, that has to be the active node.
+  if (count($vars['links']) == 1){
+    $active_link = array_pop($vars['links']);
+  }
+  // Look for a link with the class "active".
+  else {
+    foreach ($vars['links'] as $key => &$link) {
+      if (in_array('active', $link['li_attributes']['class'])) {
+        $active_link = $link;
+        unset($vars['links'][$key]);
+        break;
+      }
     }
   }
+  // Make the active link available to the template.
   $vars['active_link'] = $active_link;
   // Add classes.
   $vars['classes_array'][] = 'dropdown';
