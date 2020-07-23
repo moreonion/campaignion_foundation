@@ -21,7 +21,7 @@
   }
 ?>
 <nav>
-  <ul class="<?php print $classes; ?>" data-dropdown-menu>
+  <ul <?php print $attributes; ?> class="<?php print $classes; ?>">
     <li<?php print drupal_attributes($active_link['li_attributes'] ?? []); ?>><?php print render($active_link['renderable']); ?>
       <ul class="menu">
         <?php foreach ($links as $link): ?>

@@ -158,9 +158,12 @@ function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars)
   }
   // Make the active link available to the template.
   $vars['active_link'] = $active_link;
-  // Add classes.
+  // Add classes and attributes.
   $vars['classes_array'][] = 'dropdown';
   $vars['classes_array'][] = 'menu';
+  $vars['attributes_array']['data-dropdown-menu'] = 'true';
+  $vars['attributes_array']['data-disable-hover'] = 'true';
+  $vars['attributes_array']['data-click-open'] = 'true';
 }
 
 /**
