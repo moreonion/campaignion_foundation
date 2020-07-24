@@ -13,22 +13,7 @@
  * @ingroup themeable
  */
 
-  $head_title = 'Maintenance';
-  $title = 'Sorry!';
-  $logo = path_to_theme() . '/logo.png';
-  $foundation_assets_css = 'https://cdn.jsdelivr.net/npm/foundation-sites/dist/css/foundation.min.css';
-  // If your theme is set to display the site name, uncomment this line and
-  // replace the value:
-  // $site_name = 'Your Site Name';
-  // If your theme is set to *not* display the site name, uncomment this line:
-  unset($site_name);
-  // If your theme is set to display the site slogan, uncomment this line and
-  // replace the value:
-  // $site_slogan = 'My Site Slogan';
-  // If your theme is set to *not* display the site slogan, uncomment this line:
-  unset($site_slogan);
-  // Main message. Note HTML markup.
-  $content = '<p>This site is currently under maintenance. We should be back shortly. Thank you for your patience.</p>';
+  $foundation_assets_css = theme_get_setting('foundation_assets_css') . '?' . variable_get('css_js_query_string', '0');
 
 ?><!DOCTYPE html>
 <html lang="<?php print $language->language; ?>" class="no-js">
@@ -38,6 +23,9 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?php print $head_title; ?></title>
+
+  <?php print $styles; ?>
+  <?php print $scripts; ?>
   <link type="text/css" rel="stylesheet" href="<?php print $foundation_assets_css; ?>" media="all">
 </head>
 
@@ -69,7 +57,7 @@
         </div>
 
         <div id="content">
-          <?php print $content; ?>
+          <p><?php print $content; ?></p>
           <?php print $messages; ?>
         </div>
       </div>
