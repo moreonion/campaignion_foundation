@@ -16,7 +16,7 @@
   $head_title = 'Maintenance';
   $title = 'Sorry!';
   $logo = path_to_theme() . '/logo.png';
-  $foundation_assets_css = 'https://cdn.jsdelivr.net/npm/foundation-sites/dist/css/foundation.min.css';
+  $foundation_assets_css = 'https://assets.campaignion.org/foundist-demo/v1/main.css';
   // If your theme is set to display the site name, uncomment this line and
   // replace the value:
   // $site_name = 'Your Site Name';

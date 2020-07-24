@@ -16,8 +16,8 @@ features[] = foundation_assets
 settings[toggle_logo] = 1
 settings[toggle_name] = 1
 settings[toggle_favicon] = 1
-settings[foundation_assets_css] = 'https://cdn.jsdelivr.net/npm/foundation-sites/dist/css/foundation.min.css'
-settings[foundation_assets_js] = 'https://cdn.jsdelivr.net/npm/foundation-sites/dist/js/foundation.min.js'
+settings[foundation_assets_css] = 'https://assets.campaignion.org/foundist-demo/v1/main.css'
+settings[foundation_assets_js] = 'https://assets.campaignion.org/foundist-demo/v1/main.js'
 
 ; Regions --------------------------------------------------------------------
 ; these content regions are available for block placement
