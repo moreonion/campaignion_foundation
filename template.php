@@ -5,6 +5,8 @@
  * Template for the Campaignion Foundation Theme.
  */
 
+use Drupal\little_helpers\ElementTree;
+
 include 'includes/theme_filter_guidelines.inc';
 include 'includes/theme_form_element.inc';
 include 'includes/theme_form_element_label.inc';
@@ -83,21 +85,48 @@ function campaignion_foundation_preprocess_block(&$vars) {
   if ($vars['block']->module == 'campaignion_language_switcher') {
     $vars['title_attributes_array']['class'][] = 'show-for-sr';
   }
+  // Add classes to blocks
+  if ($vars['block']->module == 'share_light') {
+    $vars['classes_array'][] = 'share-buttons';
+  }
 }
 
 /**
  * Modify file entity variables.
  */
 function campaignion_foundation_preprocess_file_entity(&$vars) {
-  // Add class for responsive videos.
+  // Add class for responsive videos and full-width images.
   if ($vars['type'] == 'video' && $vars['content']['file']['#theme'] !== 'image_style') {
     $vars['classes_array'][] = 'responsive-embed';
+    $vars['classes_array'][] = 'widescreen';
+    $vars['classes_array'][] = 'media-stretch';
+  }
+  if (($vars['content']['file']['#image_style'] ?? '') == 'full') {
+    $vars['classes_array'][] = 'media-stretch';
   }
   // Remove wrapper class for disabled contextual links.
   if ($key = array_search('contextual-links-region', $vars['classes_array'])) {
     unset($vars['classes_array'][$key]);
   }
 }
+
+/**
+ * Modify webform form variables.
+ */
+function campaignion_foundation_preprocess_webform_form(&$vars) {
+  // Remove webform fields that start with 'below_button' from the form and push
+  // them to the end of the form array so they are rendered after the buttons.
+  $identifier = 'below_button';
+  $below_button = array();
+  foreach ($vars['form']['submitted'] as $key => $value) {
+    if (substr($key, 0, strlen($identifier)) === $identifier) {
+      $below_button[$key] = $value;
+      unset($vars['form']['submitted'][$key]);
+    }
+  }
+  $vars['form']['below_button'] = $below_button;
+}
+
 
 /**
  * Remove annoying Drupal core CSS files.
@@ -133,6 +162,7 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
     $data['content']['#attributes']['class'][] = 'no-bullet';
     if (isset($data['content']['#links'])) {
       foreach ($data['content']['#links'] as &$link) {
+        $link['attributes']['class'][] = 'large';
         $link['attributes']['class'][] = 'share';
         $link['attributes']['class'][] = 'button';
         $link['attributes']['class'][] = 'expanded';
@@ -150,7 +180,7 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
     return;
   }
   // Edit submit button classes.
-  $classes = ['expanded', 'primary', 'button'];
+  $classes = ['large', 'expanded', 'primary', 'button'];
   foreach (array_values(['next', 'submit']) as $type) {
     $button_classes = &$form['actions'][$type]['#attributes']['class'];
     // Add submit button classes.
@@ -166,6 +196,31 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   // Hide step buttons.
   $form['step_buttons']['#attributes']['class'][] = 'show-for-sr';
   $form['actions']['previous']['#attributes']['class'][] = 'show-for-sr';
+
+  // Add wrapper class for extra space on some form elements.
+  $elements = $form;
+  if (!empty($form['submitted'])) {
+    $elements = &$form['submitted'];
+  }
+  ElementTree::applyRecursively($elements, function (&$element, $key, &$parent) {
+    $element_types = ['radio', 'checkbox', 'radios', 'checkboxes'];
+    if (in_array($element['#type'] ?? '', $element_types)) {
+      $element['#wrapper_attributes']['class'][] = 'extra-spacing';
+    }
+  });
+}
+
+/**
+ * Override webform components.
+ */
+function campaignion_foundation_webform_component_render_alter(&$element, $component) {
+  // Add extra classes for donation amount radios.
+  if ($element['#webform_component']['form_key'] == 'donation_amount') {
+    if (in_array($element['#type'], ['radios', 'select_or_other'])) {
+      $element['#wrapper_attributes']['class'][] = 'donation-amount';
+      $element['#attributes']['class'][] = 'donation-amount-buttons';
+    }
+  }
 }
 
 /**
