@@ -16,7 +16,7 @@
 ?>
 <?php
   // If there aren’t any links, there’s no need for a language switcher.
-  if (!$links) {
+  if (!$links_accessible) {
     return;
   }
 ?>
@@ -24,7 +24,7 @@
   <ul <?php print $attributes; ?> class="<?php print $classes; ?>">
     <li<?php print drupal_attributes($active_link['li_attributes'] ?? []); ?>><?php print render($active_link['renderable']); ?>
       <ul class="menu">
-        <?php foreach ($links as $link): ?>
+        <?php foreach ($links_accessible as $link): ?>
         <li<?php print drupal_attributes($link['li_attributes']); ?>><?php print render($link['renderable']); ?></li>
         <?php endforeach; ?>
       </ul>

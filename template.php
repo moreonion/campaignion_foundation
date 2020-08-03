@@ -131,7 +131,7 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
  * Modify campaignion language switcher variables.
  */
 function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
-  // Save active link separate from the rest.
+  // Save the currently active link into $active_link and remove it from the list.
   // (With GeoIP enabled, the path might not match the actual node path and no
   // link is considered active, therefore we have to fake a default active link.)
   $active_link = [
@@ -142,15 +142,17 @@ function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars)
       '#options' => ['attributes' => []],
     ],
   ];
-  // If there is just one link, that has to be the active node.
-  if (count($vars['links']) == 1){
-    $active_link = array_pop($vars['links']);
+  if (count($vars['links_accessible']) == 1){
+    // If there is just one accessible link, that has to be the active link.
+    $active_link = array_pop($vars['links_accessible']);
+    array_pop($vars['links']);
   }
-  // Look for a link with the class "active".
   else {
-    foreach ($vars['links'] as $key => &$link) {
+    // Look for a link with the class "active".
+    foreach ($vars['links_accessible'] as $key => $link) {
       if (in_array('active', $link['li_attributes']['class'])) {
         $active_link = $link;
+        unset($vars['links_accessible'][$key]);
         unset($vars['links'][$key]);
         break;
       }
@@ -217,17 +219,6 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
         $link['attributes']['class'][] = 'button';
         $link['attributes']['class'][] = 'expanded';
         $link['attributes']['class'][] = $link['attributes']['data-share'] . '-icon';
-      }
-    }
-  }
-  // Remove disabled links from campaignion language switcher blocks.
-  if ($block->module == 'campaignion_language_switcher') {
-    if (isset($data['content']['#links'])) {
-      $links = &$data['content']['#links'];
-      foreach ($links as $key => $link) {
-        if (empty($link['href'])) {
-          unset($links[$key]);
-        }
       }
     }
   }
