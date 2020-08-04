@@ -88,6 +88,10 @@ function campaignion_foundation_preprocess_block(&$vars) {
   // Add classes to blocks
   if ($vars['block']->module == 'share_light') {
     $vars['classes_array'][] = 'share-buttons';
+    $vars['title_attributes_array']['class'][] = 'share-buttons-title';
+  }
+  if ($vars['block']->module == 'recent_supporters') {
+    $vars['title_attributes_array']['class'][] = 'recent-supporters-title';
   }
 }
 
