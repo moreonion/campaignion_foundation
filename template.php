@@ -85,7 +85,7 @@ function campaignion_foundation_preprocess_block(&$vars) {
   if ($vars['block']->module == 'campaignion_language_switcher') {
     $vars['title_attributes_array']['class'][] = 'show-for-sr';
   }
-  // Add classes to blocks
+  // Add classes to blocks.
   if ($vars['block']->module == 'share_light') {
     $vars['classes_array'][] = 'share-buttons';
   }
@@ -127,23 +127,75 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
   $vars['form']['below_button'] = $below_button;
 }
 
+/**
+ * Modify campaignion language switcher variables.
+ */
+function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
+  // Save the currently active link into $active_link and remove it from the list.
+  // (With GeoIP enabled, the path might not match the actual node path and no
+  // link is considered active, therefore we have to fake a default active link.)
+  $active_link = [
+    'renderable' => [
+      '#text' => t('Choose country'),
+      '#path' => '#',
+      '#theme' => 'link',
+      '#options' => ['attributes' => []],
+    ],
+  ];
+  if (count($vars['links_accessible']) == 1){
+    // If there is just one accessible link, that has to be the active link.
+    $active_link = array_pop($vars['links_accessible']);
+    array_pop($vars['links']);
+  }
+  else {
+    // Look for a link with the class "active".
+    foreach ($vars['links_accessible'] as $key => $link) {
+      if (in_array('active', $link['li_attributes']['class'])) {
+        $active_link = $link;
+        unset($vars['links_accessible'][$key]);
+        unset($vars['links'][$key]);
+        break;
+      }
+    }
+  }
+  // Make the active link available to the template.
+  $vars['active_link'] = $active_link;
+  // Add classes and attributes.
+  $vars['classes_array'][] = 'dropdown';
+  $vars['classes_array'][] = 'menu';
+  $vars['attributes_array']['data-dropdown-menu'] = 'true';
+  $vars['attributes_array']['data-disable-hover'] = 'true';
+  $vars['attributes_array']['data-click-open'] = 'true';
+}
 
 /**
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $blacklist = ['webform.css', 'filter.css', 'recent-supporters.css'];
+  $exclude = ['webform.css', 'filter.css', 'recent-supporters.css'];
   foreach ($css as $path => $values) {
-    // Remove blacklist and files where the name starts with "system"
+    // Remove exclusion list and files where the name starts with "system"
     // (e.g. system.base.css).
-    if (in_array(basename($path), $blacklist) || strpos(basename($path), 'system') === 0) {
+    if (in_array(basename($path), $exclude) || strpos(basename($path), 'system') === 0) {
       unset($css[$path]);
     }
   }
 }
 
 /**
- * Disable contextual links on certain elements: files, blacklisted blocks.
+ * Remove annoying Drupal core JS files.
+ */
+function campaignion_foundation_js_alter(&$js) {
+  $exclude = ['campaignion_language_switcher.js'];
+  foreach ($js as $path => $values) {
+    if (in_array(basename($path), $exclude)) {
+      unset($js[$path]);
+    }
+  }
+}
+
+/**
+ * Disable contextual links on certain elements: files, excluded blocks.
  */
 function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
   $file = $element['#element']['#file'] ?? NULL;
@@ -244,10 +296,10 @@ function _campaignion_foundation_pre_render_select($element) {
 }
 
 /**
- * Helper function to keep blacklist for contextual links in one place.
+ * Helper function to keep exclusion list for contextual links in one place.
  */
 function _campaignion_foundation_exclude_block_from_contextual_links($module) {
-  $blacklist = [
+  $exclude = [
     'cck_blocks',
     'webform_block',
     'pgbar',
@@ -255,5 +307,5 @@ function _campaignion_foundation_exclude_block_from_contextual_links($module) {
     'share_light',
     'campaignion_language_switcher',
   ];
-  return in_array($module, $blacklist);
+  return in_array($module, $exclude);
 }
