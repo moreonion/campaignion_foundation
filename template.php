@@ -22,6 +22,19 @@ include 'includes/theme_webform_managed_file.inc';
 include 'includes/theme_webform_time.inc';
 
 /**
+ * Make theme layouts available.
+ */
+function campaignion_foundation_campaignion_layout_info() {
+  $info['banner'] = [
+    'title' => t('Big banner layout'),
+    'fields' => [
+      'layout_background_image' => TRUE,
+    ],
+  ];
+  return $info;
+}
+
+/**
  * Modify html variables, add assets.
  */
 function campaignion_foundation_preprocess_html(&$vars) {
