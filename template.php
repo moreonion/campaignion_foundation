@@ -72,6 +72,16 @@ function campaignion_foundation_preprocess_node(&$vars) {
 }
 
 /**
+ * Modify page variables.
+ */
+function campaignion_foundation_preprocess_page(&$vars) {
+  // Pass a renderable array of layout_background_image to the template for layouts that need it.
+  if ($node = $vars['node'] ?? NULL && $layout = $vars['layout'] ?? '' && in_array($layout, ['banner'])) {
+    $vars['background_image'] = field_view_field('node', $node, 'layout_background_image');
+  }
+}
+
+/**
  * Modify node processing.
  */
 function campaignion_foundation_process_node(&$vars) {

@@ -104,6 +104,12 @@
     </section>
     <?php endif; ?>
 
+    <?php if ($layout === 'banner'): ?>
+    <section id="banner">
+      <?php print render($background_image); ?>
+    </section>
+    <?php endif; ?>
+
     <?php if ($messages): ?>
     <section id="messages">
       <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
