@@ -28,7 +28,10 @@ function campaignion_foundation_campaignion_layout_info() {
   $info['banner'] = [
     'title' => t('Big banner layout'),
     'fields' => [
-      'layout_background_image' => TRUE,
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
     ],
   ];
   return $info;
@@ -68,16 +71,6 @@ function campaignion_foundation_preprocess_node(&$vars) {
     $vars['content_attributes_array']['class'][] = 'card-section';
     $vars['footer_attributes_array']['class'][] = 'card-section';
     $vars['content']['links']['#attributes']['class'][] = 'no-bullet';
-  }
-}
-
-/**
- * Modify page variables.
- */
-function campaignion_foundation_preprocess_page(&$vars) {
-  // Pass a renderable array of layout_background_image to the template for layouts that need it.
-  if ($node = $vars['node'] ?? NULL && $layout = $vars['layout'] ?? '' && in_array($layout, ['banner'])) {
-    $vars['background_image'] = field_view_field('node', $node, 'layout_background_image');
   }
 }
 
