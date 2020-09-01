@@ -142,10 +142,12 @@
         <div id="sidebar">
           <?php print render($page['sidebar_first']); ?>
           <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
-            <div id="form">
-              <?php foreach ($existing_form_blocks as $block): ?>
-                <?php print render($page['sidebar_second'][$block]); ?>
-              <?php endforeach; ?>
+            <div id=form-wrapper class="flex-container align-middle">
+              <div id="form">
+                <?php foreach ($existing_form_blocks as $block): ?>
+                  <?php print render($page['sidebar_second'][$block]); ?>
+                <?php endforeach; ?>
+              </div>
             </div>
           <?php endif; ?>
           <?php print render($page['sidebar_second']); ?>
