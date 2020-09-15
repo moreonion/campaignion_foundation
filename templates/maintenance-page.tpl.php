@@ -9,8 +9,6 @@
  *
  * @see template_preprocess()
  * @see template_preprocess_maintenance_page()
- *
- * @ingroup themeable
  */
 
   $foundation_assets_css = theme_get_setting('foundation_assets_css') . '?' . variable_get('css_js_query_string', '0');

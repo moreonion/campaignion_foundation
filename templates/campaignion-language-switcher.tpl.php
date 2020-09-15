@@ -10,8 +10,6 @@
  *   - $link['renderable']: A renderable array for the link content.
  *
  * @see template_preprocess_campaignion_language_switcher()
- *
- * @ingroup themeable
  */
 ?>
 <?php

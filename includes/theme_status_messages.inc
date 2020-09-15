@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_status_messages().
+ * Returns HTML for status messages.
  *
  * - Add class 'callout'.
  * - Add status classes and use this class instead of type.

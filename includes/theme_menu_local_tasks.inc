@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_menu_local_tasks().
+ * Returns HTML for menu local tasks.
  *
  * - Replace tabs with menu classes.
  * - Add 'admin' class to identify the menu.

@@ -9,8 +9,6 @@
  *
  * @see template_preprocess()
  * @see template_preprocess_maintenance_page()
- *
- * @ingroup themeable
  */
 
   $head_title = 'Maintenance';

@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_pager().
+ * Returns HTML for a pager.
  *
  * - Replace 'pager' → 'pagination'.
  * - Replace 'element-invisible' → 'show-for-sr'.

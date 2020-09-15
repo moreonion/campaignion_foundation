@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_filter_guidelines().
+ * Returns HTML for filter guidelines.
  *
  * Add class 'help-text'.
  *
