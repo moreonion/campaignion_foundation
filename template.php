@@ -87,6 +87,14 @@ function campaignion_foundation_process_node(&$vars) {
 }
 
 /**
+ * Prepares variables for page templates.
+ */
+function campaignion_foundation_preprocess_page(&$vars) {
+  // Define the fields which constitute the form fields.
+  $vars['form_blocks'] = ['cck_blocks_field_form_intro', 'cck_blocks_pgbar_default', 'webform_block_current'];
+}
+
+/**
  * Prepares variables for block templates.
  */
 function campaignion_foundation_preprocess_block(&$vars) {

@@ -72,7 +72,6 @@
 
   // Helper variables:
   $no_sidebar = empty($page['sidebar_first']) && empty($page['sidebar_second']);
-  $form_blocks = ['cck_blocks_field_form_intro', 'cck_blocks_pgbar_default', 'webform_block_current'];
 ?>
   <div id="page">
 
