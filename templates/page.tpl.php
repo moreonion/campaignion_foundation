@@ -163,12 +163,12 @@
     </section>
     <?php endif; ?>
 
-    <?php if (!empty($page['footer'])): ?>
-    <section id="footer">
-      <div class="grid-container">
-        <?php print render($page['footer']); ?>
-      </div>
-    </section>
-    <?php endif; ?>
-
   </div>
+
+  <?php if (!empty($page['footer'])): ?>
+  <section id="footer">
+    <div class="grid-container">
+      <?php print render($page['footer']); ?>
+    </div>
+  </section>
+  <?php endif; ?>
