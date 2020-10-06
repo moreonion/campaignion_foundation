@@ -8,7 +8,8 @@
 /**
  * Implements theme_form_element_label().
  *
- * Add label attributes.
+ * - Add label attributes.
+ * - Wrap radio/checkbox labels in a `<span>`.
  *
  * See drupal/includes/form.inc.
  */
@@ -33,6 +34,7 @@ function campaignion_foundation_form_element_label($variables) {
   // Style the label as class option to display inline with the element.
   if ($element['#title_display'] == 'after') {
     $attributes['class'][] = 'option';
+    $title = '<span>' . $title . '</span>';
   }
   elseif ($element['#title_display'] == 'invisible') {
     $attributes['class'][] = 'element-invisible';
