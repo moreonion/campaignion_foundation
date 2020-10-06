@@ -95,7 +95,7 @@
 
     <?php if (!empty($page['highlighted'])): ?>
     <section id="highlighted">
-      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+      <div class="grid-container">
         <?php print render($page['highlighted']); ?>
       </div>
     </section>
@@ -162,7 +162,7 @@
 
     <?php if (!empty($page['bottom'])): ?>
     <section id="bottom">
-      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+      <div class="grid-container">
         <?php print render($page['bottom']); ?>
       </div>
     </section>
