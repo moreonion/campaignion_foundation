@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_text_format_wrapper().
+ * Returns HTML for a text format wrapper.
  *
  * Replace description class: 'description' → 'help-text'.
  *

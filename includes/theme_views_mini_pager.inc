@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_views_mini_pager().
+ * Returns HTML for a views mini pager.
  *
  * Replace 'pager' → 'pagination'.
  *

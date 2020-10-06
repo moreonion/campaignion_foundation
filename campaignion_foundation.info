@@ -11,6 +11,7 @@ core = 7.x
 features[] = logo
 features[] = name
 features[] = favicon
+features[] = layout_variations
 features[] = foundation_assets
 
 settings[toggle_logo] = 1

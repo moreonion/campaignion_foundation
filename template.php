@@ -22,7 +22,25 @@ include 'includes/theme_webform_managed_file.inc';
 include 'includes/theme_webform_time.inc';
 
 /**
- * Modify html variables, add assets.
+ * Implements hook_campaignion_layout_info().
+ *
+ * Make theme layouts available.
+ */
+function campaignion_foundation_campaignion_layout_info() {
+  $info['banner'] = [
+    'title' => t('Big banner layout'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
+  return $info;
+}
+
+/**
+ * Prepares variables for html templates.
  */
 function campaignion_foundation_preprocess_html(&$vars) {
   $query_string = variable_get('css_js_query_string', '0');
@@ -42,7 +60,7 @@ function campaignion_foundation_preprocess_html(&$vars) {
 }
 
 /**
- * Modify node variables.
+ * Prepares variables for node templates.
  */
 function campaignion_foundation_preprocess_node(&$vars) {
   // Add 'content' class to attributes array instead of hardcoding it in the
@@ -59,7 +77,7 @@ function campaignion_foundation_preprocess_node(&$vars) {
 }
 
 /**
- * Modify node processing.
+ * Prepares variables for node processing.
  */
 function campaignion_foundation_process_node(&$vars) {
   // Render custom attribute arrays.
@@ -69,7 +87,15 @@ function campaignion_foundation_process_node(&$vars) {
 }
 
 /**
- * Modify block variables.
+ * Prepares variables for page templates.
+ */
+function campaignion_foundation_preprocess_page(&$vars) {
+  // Define the fields which constitute the form fields.
+  $vars['form_blocks'] = ['cck_blocks_field_form_intro', 'cck_blocks_pgbar_default', 'webform_block_current'];
+}
+
+/**
+ * Prepares variables for block templates.
  */
 function campaignion_foundation_preprocess_block(&$vars) {
   // Add 'content' class to attributes array instead of hardcoding it in the
@@ -96,7 +122,7 @@ function campaignion_foundation_preprocess_block(&$vars) {
 }
 
 /**
- * Modify file entity variables.
+ * Prepares variables for file entity templates.
  */
 function campaignion_foundation_preprocess_file_entity(&$vars) {
   // Add class for responsive videos and full-width images.
@@ -115,7 +141,7 @@ function campaignion_foundation_preprocess_file_entity(&$vars) {
 }
 
 /**
- * Modify webform form variables.
+ * Prepares variables for webform form templates.
  */
 function campaignion_foundation_preprocess_webform_form(&$vars) {
   // Remove webform fields that start with 'below_button' from the form and push
@@ -132,12 +158,13 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
 }
 
 /**
- * Modify campaignion language switcher variables.
+ * Prepares variables for campaignion language switcher templates.
  */
 function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
-  // Save the currently active link into $active_link and remove it from the list.
-  // (With GeoIP enabled, the path might not match the actual node path and no
-  // link is considered active, therefore we have to fake a default active link.)
+  // Save the currently active link into $active_link and remove it from the
+  // list of links. (With GeoIP enabled, the path might not match the actual
+  // node path and no link is considered active, therefore we have to fake a
+  // default active link.)
   $active_link = [
     'renderable' => [
       '#text' => t('Choose country'),
@@ -146,7 +173,7 @@ function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars)
       '#options' => ['attributes' => []],
     ],
   ];
-  if (count($vars['links_accessible']) == 1){
+  if (count($vars['links_accessible']) == 1) {
     // If there is just one accessible link, that has to be the active link.
     $active_link = array_pop($vars['links_accessible']);
     array_pop($vars['links']);
@@ -173,6 +200,8 @@ function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars)
 }
 
 /**
+ * Implements hook_css_alter().
+ *
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
@@ -187,6 +216,8 @@ function campaignion_foundation_css_alter(&$css) {
 }
 
 /**
+ * Implements hook_js_alter().
+ *
  * Remove annoying Drupal core JS files.
  */
 function campaignion_foundation_js_alter(&$js) {
@@ -199,6 +230,8 @@ function campaignion_foundation_js_alter(&$js) {
 }
 
 /**
+ * Implements hook_contextual_links_view_alter().
+ *
  * Disable contextual links on certain elements: files, excluded blocks.
  */
 function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
@@ -210,7 +243,7 @@ function campaignion_foundation_contextual_links_view_alter(&$element, $items) {
 }
 
 /**
- * Override blocks.
+ * Implements hook_block_view_alter().
  */
 function campaignion_foundation_block_view_alter(&$data, $block) {
   // Add button classes for share light blocks.
@@ -229,7 +262,7 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
 }
 
 /**
- * Override forms.
+ * Implements hook_form_alter().
  */
 function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   if (empty($form['actions']['#type']) || $form['actions']['#type'] !== 'actions') {
@@ -267,7 +300,7 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
- * Override webform components.
+ * Implements hook_webform_component_render_alter().
  */
 function campaignion_foundation_webform_component_render_alter(&$element, $component) {
   // Add extra classes for donation amount radios.
@@ -280,7 +313,7 @@ function campaignion_foundation_webform_component_render_alter(&$element, $compo
 }
 
 /**
- * Override element info.
+ * Implements hook_element_info_alter().
  */
 function campaignion_foundation_element_info_alter(&$type) {
   // Add custom pre-render function to select elements.

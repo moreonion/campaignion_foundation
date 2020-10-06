@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_webform_date().
+ * Returns HTML for a webform date component.
  *
  * - Add class 'input-group' to wrapper.
  * - Add custom attribute '#input_group' on children.

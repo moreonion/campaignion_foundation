@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_form_element_label().
+ * Returns HTML for a form element label.
  *
  * - Add label attributes.
  * - Wrap radio/checkbox labels in a `<span>`.

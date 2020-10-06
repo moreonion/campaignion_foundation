@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_form_element().
+ * Returns HTML for a form element.
  *
  * - Replace description class: 'description' → 'help-text'.
  * - Omit wrapper for elements in input-groups.

@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_webform_element().
+ * Returns HTML for a webform element.
  *
  * Replace description class: 'description' → 'help-text'.
  *

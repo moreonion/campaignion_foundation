@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_recent_supporters().
+ * Returns HTML for recent supporters.
  *
  * - Remove "clearfix" class on supporter list items.
  * - Move wrapper outside so it’s also there for no supporters.

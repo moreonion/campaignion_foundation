@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements theme_webform_managed_file().
+ * Returns HTML for a webform managed file component.
  *
  * - Hide native file input (can’t be styled).
  * - Hide superfluous buttons.
