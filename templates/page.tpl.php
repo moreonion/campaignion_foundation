@@ -101,13 +101,13 @@
     </section>
     <?php endif; ?>
 
-    <?php if ($layout === 'banner'): ?>
+    <?php if ($layout === 'banner' && !empty($background_image)): ?>
     <section id="banner">
       <?php print render($background_image); ?>
     </section>
     <?php endif; ?>
 
-    <?php if ($layout === 'cover-1col'): ?>
+    <?php if ($layout === 'cover-1col' && !empty($background_image)): ?>
     <section id="background">
       <?php print render($background_image); ?>
     </section>
