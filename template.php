@@ -120,6 +120,10 @@ function campaignion_foundation_preprocess_block(&$vars) {
   if ($vars['block']->module == 'campaignion_language_switcher') {
     $vars['title_attributes_array']['class'][] = 'show-for-sr';
   }
+  // Add id to webform blocks.
+  if ($vars['block']->module == 'webform_block') {
+    $vars['content_attributes_array']['id'] = drupal_html_id('form');
+  }
   // Add classes to blocks.
   if ($vars['block']->module == 'share_light') {
     $vars['classes_array'][] = 'share-buttons';
