@@ -319,6 +319,7 @@ function campaignion_foundation_element_info_alter(&$type) {
   // Add custom pre-render function to select elements.
   if (isset($type['select'])) {
     $type['select']['#pre_render'][] = '_campaignion_foundation_pre_render_select';
+    $type['select']['#select_two'] = TRUE;
   }
 }
 
@@ -328,7 +329,9 @@ function campaignion_foundation_element_info_alter(&$type) {
  * This lets the Foundation SelectTwo plugin discover the select elements.
  */
 function _campaignion_foundation_pre_render_select($element) {
-  $element['#attributes']['data-select-two'] = "select-two";
+  if ($element['#select_two']) {
+    $element['#attributes']['data-select-two'] = "select-two";
+  }
   return $element;
 }
 
