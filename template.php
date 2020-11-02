@@ -300,6 +300,16 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
+ * Implements hook_payment_forms_payment_form_alter().
+ */
+function campaignion_foundation_payment_forms_payment_form_alter(&$element, \Payment $payment) {
+  if ($payment->method->controller->name == 'braintree_payment_credit_card') {
+    $element['expiry_date']['month']['#select_two'] = FALSE;
+    $element['expiry_date']['year']['#select_two'] = FALSE;
+  }
+}
+
+/**
  * Implements hook_webform_component_render_alter().
  */
 function campaignion_foundation_webform_component_render_alter(&$element, $component) {
