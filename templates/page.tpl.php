@@ -73,7 +73,7 @@
   // Helper variables:
   $no_sidebar = empty($page['sidebar_first']) && empty($page['sidebar_second']);
 ?>
-  <div id="page">
+  <div id="page" class="<?php print $layout ?? 'default'; ?>-layout">
 
     <section id="header">
       <div class="top-bar grid-container">
@@ -95,74 +95,84 @@
 
     <?php if (!empty($page['highlighted'])): ?>
     <section id="highlighted">
-      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+      <div class="grid-container">
         <?php print render($page['highlighted']); ?>
       </div>
     </section>
     <?php endif; ?>
 
-    <?php if ($layout === 'banner'): ?>
+    <?php if ($layout === 'banner' && !empty($background_image)): ?>
     <section id="banner">
+      <?php print render($background_image); ?>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($layout === 'cover-1col' && !empty($background_image)): ?>
+    <section id="background">
       <?php print render($background_image); ?>
     </section>
     <?php endif; ?>
 
     <?php if ($messages): ?>
     <section id="messages">
-      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+      <div class="grid-container<?php print ($no_sidebar || $layout == 'cover-1col' ? ' narrow' : ''); ?>">
         <?php print $messages; ?>
       </div>
     </section>
     <?php endif; ?>
 
     <section id="main">
-      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ' with-sidebar'); ?>">
+      <div class="grid-container<?php print ($no_sidebar || $layout == 'cover-1col' ? ' narrow' : ' with-sidebar'); ?>">
 
-        <div id="top">
-          <?php if ($title): ?>
-          <?php print render($title_prefix); ?>
-          <h1 id="page-title"><?php print $title; ?></h1>
-          <?php print render($title_suffix); ?>
+        <?php if ($layout === 'cover-1col'): ?><div class="inner-wrapper"><?php endif; ?>
+
+          <div id="top">
+            <?php if ($title): ?>
+            <?php print render($title_prefix); ?>
+            <h1 id="page-title"><?php print $title; ?></h1>
+            <?php print render($title_suffix); ?>
+            <?php endif; ?>
+
+            <?php print render($page['help']); ?>
+            <?php if ($action_links): ?>
+              <ul class="action-links">
+                <?php print render($action_links); ?>
+              </ul>
+            <?php endif; ?>
+
+            <?php print render($page['top']); ?>
+          </div>
+
+          <?php if (!$no_sidebar): ?>
+            <?php if (!$layout || $layout === 'banner'): ?><div id="sidebar"><?php endif; ?>
+              <?php print render($page['sidebar_first']); ?>
+              <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
+                <div id=form-wrapper class="flex-container align-middle">
+                  <div id="form">
+                    <?php foreach ($existing_form_blocks as $block): ?>
+                      <?php print render($page['sidebar_second'][$block]); ?>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              <?php endif; ?>
+              <?php print render($page['sidebar_second']); ?>
+            <?php if (!$layout || $layout === 'banner'): ?></div><?php endif; ?>
           <?php endif; ?>
 
-          <?php print render($page['help']); ?>
-          <?php if ($action_links): ?>
-            <ul class="action-links">
-              <?php print render($action_links); ?>
-            </ul>
-          <?php endif; ?>
+          <div id="content">
+            <?php print render($page['content_top']); ?>
+            <?php print render($page['content']); ?>
+            <?php print render($page['content_bottom']); ?>
+          </div>
 
-          <?php print render($page['top']); ?>
-        </div>
-
-        <?php if (!$no_sidebar): ?>
-        <div id="sidebar">
-          <?php print render($page['sidebar_first']); ?>
-          <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
-            <div id=form-wrapper class="flex-container align-middle">
-              <div id="form">
-                <?php foreach ($existing_form_blocks as $block): ?>
-                  <?php print render($page['sidebar_second'][$block]); ?>
-                <?php endforeach; ?>
-              </div>
-            </div>
-          <?php endif; ?>
-          <?php print render($page['sidebar_second']); ?>
-        </div>
-        <?php endif; ?>
-
-        <div id="content">
-          <?php print render($page['content_top']); ?>
-          <?php print render($page['content']); ?>
-          <?php print render($page['content_bottom']); ?>
-        </div>
+        <?php if ($layout === 'cover-1col'): ?></div><?php endif; ?>
 
       </div>
     </section>
 
     <?php if (!empty($page['bottom'])): ?>
     <section id="bottom">
-      <div class="grid-container<?php print ($no_sidebar ? ' narrow' : ''); ?>">
+      <div class="grid-container">
         <?php print render($page['bottom']); ?>
       </div>
     </section>

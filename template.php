@@ -36,6 +36,15 @@ function campaignion_foundation_campaignion_layout_info() {
       ],
     ],
   ];
+  $info['cover-1col'] = [
+    'title' => t('Fixed background 1 column layout'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
   return $info;
 }
 
