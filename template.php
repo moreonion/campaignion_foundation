@@ -81,8 +81,11 @@ function campaignion_foundation_preprocess_page(&$vars) {
   // Layout helper variables.
   $is_single_column = in_array($vars['layout'], ['cover-1col']);
   $has_sidebar = !empty($vars['page']['sidebar_first'] || $vars['page']['sidebar_second']);
+  $teaser_blocks = ['views_actions-block', 'views_actions_promoted-block'];
+  $content_blocks = array_keys($vars['page']['content_top'] + $vars['page']['content'] + $vars['page']['content_bottom']);
+  $has_teasers = current_path() == 'node' || array_intersect($teaser_blocks, $content_blocks);
   $vars['has_sidebar'] = $has_sidebar;
-  $vars['is_narrow'] = $is_single_column || !$has_sidebar;
+  $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
 }
 
 /**
