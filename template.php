@@ -295,6 +295,18 @@ function campaignion_foundation_block_view_alter(&$data, $block) {
 }
 
 /**
+ * Implements hook_field_attach_view_alter().
+ *
+ * Add a theme hook for pgbars displayed on teasers.
+ * This takes precedence over styles configured in the pgbar settings.
+ */
+function campaignion_foundation_field_attach_view_alter(&$output, $context) {
+  if (!empty($output['pgbar_default']) && $context['view_mode'] == 'teaser') {
+    array_unshift($output['pgbar_default'][0]['#theme'], 'pgbar__teaser');
+  }
+}
+
+/**
  * Implements hook_form_alter().
  */
 function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
