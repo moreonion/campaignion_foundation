@@ -132,6 +132,9 @@ function campaignion_foundation_preprocess_block(&$vars) {
   if ($vars['block']->module == 'recent_supporters') {
     $vars['title_attributes_array']['class'][] = 'recent-supporters-title';
   }
+  if ((current_path() == 'node' && $vars['block']->module == 'system')) {
+    $vars['content_attributes_array']['class'][] = 'teasers';
+  }
 }
 
 /**
