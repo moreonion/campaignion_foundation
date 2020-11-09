@@ -69,6 +69,23 @@ function campaignion_foundation_preprocess_html(&$vars) {
 }
 
 /**
+ * Prepares variables for page templates.
+ */
+function campaignion_foundation_preprocess_page(&$vars) {
+  // Define the fields which constitute the form fields.
+  $vars['form_blocks'] = [
+    'cck_blocks_field_form_intro',
+    'cck_blocks_pgbar_default',
+    'webform_block_current',
+  ];
+  // Layout helper variables.
+  $is_single_column = in_array($vars['layout'], ['cover-1col']);
+  $has_sidebar = !empty($vars['page']['sidebar_first'] || $vars['page']['sidebar_second']);
+  $vars['has_sidebar'] = $has_sidebar;
+  $vars['is_narrow'] = $is_single_column || !$has_sidebar;
+}
+
+/**
  * Prepares variables for node templates.
  */
 function campaignion_foundation_preprocess_node(&$vars) {
@@ -93,14 +110,6 @@ function campaignion_foundation_process_node(&$vars) {
   // See template_process() in drupal/includes/theme.inc.
   $vars['header_attributes'] = !empty($vars['header_attributes_array']) ? drupal_attributes($vars['header_attributes_array']) : '';
   $vars['footer_attributes'] = !empty($vars['footer_attributes_array']) ? drupal_attributes($vars['footer_attributes_array']) : '';
-}
-
-/**
- * Prepares variables for page templates.
- */
-function campaignion_foundation_preprocess_page(&$vars) {
-  // Define the fields which constitute the form fields.
-  $vars['form_blocks'] = ['cck_blocks_field_form_intro', 'cck_blocks_pgbar_default', 'webform_block_current'];
 }
 
 /**
