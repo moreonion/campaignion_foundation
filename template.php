@@ -102,6 +102,11 @@ function campaignion_foundation_preprocess_node(&$vars) {
     $vars['content_attributes_array']['class'][] = 'card-section';
     $vars['footer_attributes_array']['class'][] = 'card-section';
     $vars['content']['links']['#attributes']['class'][] = 'no-bullet';
+    foreach ($vars['content']['links']['node']['#links'] as &$link) {
+      foreach (['card-link', 'button', 'small'] as $class) {
+        $link['attributes']['class'][] = $class;
+      }
+    }
   }
 }
 
