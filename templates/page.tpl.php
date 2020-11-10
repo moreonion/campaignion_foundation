@@ -55,6 +55,10 @@
  *   in the page's path (e.g. node/12345 and node/12345/revisions, but not
  *   comment/reply/12345).
  *
+ * Layout (theme specfic variables):
+ * - $has_sidebar: TRUE when there is any content in a sidebar region.
+ * - $is_narrow: TRUE when the layout asks for a narrow grid.
+ *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
  * - $page['highlighted']: Items for the highlighted content region.
