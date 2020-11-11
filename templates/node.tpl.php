@@ -82,28 +82,22 @@
   hide($content['comments']);
   hide($content['links']);
   hide($content['field_tags']);
-  if (!$rendered_content = render($content)) {
+  if ($page && !$rendered_content = render($content)) {
     return;
   }
 ?>
 <article id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
-  <?php if ($user_picture || !$page || $display_submitted): ?>
+  <?php if ($user_picture || $display_submitted): ?>
     <header<?php print $header_attributes; ?>>
       <?php print $user_picture; ?>
-
-      <?php print render($title_prefix); ?>
-      <?php if (!$page): ?>
-        <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
-      <?php endif; ?>
-      <?php print render($title_suffix); ?>
 
       <?php if ($display_submitted): ?>
 
       <p class="submitted">
         <?php print $submitted; ?>
         <time pubdate datetime="<?php print $submitted_pubdate; ?>">
-        <?php print $submitted_date; ?>
+          <?php print $submitted_date; ?>
         </time>
       </p>
 
@@ -111,12 +105,30 @@
     </header>
   <?php endif; ?>
 
+  <?php if ($teaser): ?>
+    <div class="card-image">
+      <?php print render($content['layout_background_image']) ?? render($content['field_main_image']); ?>
+      <?php hide($content['field_main_image']); ?>
+    </div>
+  <?php endif; ?>
+
   <div<?php print $content_attributes; ?>>
-    <?php print $rendered_content; ?>
+
+    <?php if ($teaser): ?>
+    <?php print render($content['pgbar_default']); ?>
+    <?php endif; ?>
+
+    <?php if (!$page): ?>
+    <?php print render($title_prefix); ?>
+    <h4<?php print $title_attributes; ?>><?php print $title; ?></h4>
+    <?php print render($title_suffix); ?>
+    <?php endif; ?>
+
+    <?php print ($rendered_content ?? render($content)); ?>
   </div>
 
   <?php if (!empty($content['field_tags']) || !empty($content['links'])): ?>
-    <footer<?php print $header_attributes; ?>>
+    <footer<?php print $footer_attributes; ?>>
       <?php print render($content['field_tags']); ?>
       <?php print render($content['links']); ?>
     </footer>

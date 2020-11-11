@@ -28,15 +28,6 @@ Drupal.behaviors.webformAjaxSlide.attach = function (context, settings) {
   });
 }
 
-// Make node teasers clickable.
-Drupal.behaviors.clickableTeasers = {};
-Drupal.behaviors.clickableTeasers.attach = function (context, settings) {
-  $('.node-teaser', context).click(function (event) {
-    event.preventDefault();
-    window.location.href = $('.node-readmore a', this).attr('href');
-  }).css('cursor', 'pointer');
-};
-
 // Custom clientside validation.
 Drupal.behaviors.campaignion_foundation_clientside_validation = {};
 Drupal.behaviors.campaignion_foundation_clientside_validation.attach = function (context, settings) {

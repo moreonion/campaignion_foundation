@@ -55,6 +55,10 @@
  *   in the page's path (e.g. node/12345 and node/12345/revisions, but not
  *   comment/reply/12345).
  *
+ * Layout (theme specfic variables):
+ * - $has_sidebar: TRUE when there is any content in a sidebar region.
+ * - $is_narrow: TRUE when the layout asks for a narrow grid.
+ *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
  * - $page['highlighted']: Items for the highlighted content region.
@@ -69,9 +73,6 @@
  * @see template_process()
  * @see html.tpl.php
  */
-
-  // Helper variables:
-  $no_sidebar = empty($page['sidebar_first']) && empty($page['sidebar_second']);
 ?>
   <div id="page" class="<?php print $layout ?? 'default'; ?>-layout">
 
@@ -115,14 +116,14 @@
 
     <?php if ($messages): ?>
     <section id="messages">
-      <div class="grid-container<?php print ($no_sidebar || $layout == 'cover-1col' ? ' narrow' : ''); ?>">
+      <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?>">
         <?php print $messages; ?>
       </div>
     </section>
     <?php endif; ?>
 
     <section id="main">
-      <div class="grid-container<?php print ($no_sidebar || $layout == 'cover-1col' ? ' narrow' : ' with-sidebar'); ?>">
+      <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?><?php print (!$is_narrow && $has_sidebar ? ' with-sidebar' : ''); ?>">
 
         <?php if ($layout === 'cover-1col'): ?><div class="inner-wrapper"><?php endif; ?>
 
@@ -143,8 +144,8 @@
             <?php print render($page['top']); ?>
           </div>
 
-          <?php if (!$no_sidebar): ?>
-            <?php if (!$layout || $layout === 'banner'): ?><div id="sidebar"><?php endif; ?>
+          <?php if ($has_sidebar): ?>
+            <?php if (!$is_narrow): ?><div id="sidebar"><?php endif; ?>
               <?php print render($page['sidebar_first']); ?>
               <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
                 <div id=form-wrapper class="flex-container align-middle">
@@ -156,7 +157,7 @@
                 </div>
               <?php endif; ?>
               <?php print render($page['sidebar_second']); ?>
-            <?php if (!$layout || $layout === 'banner'): ?></div><?php endif; ?>
+            <?php if (!$is_narrow): ?></div><?php endif; ?>
           <?php endif; ?>
 
           <div id="content">
