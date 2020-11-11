@@ -95,16 +95,37 @@ function campaignion_foundation_preprocess_node(&$vars) {
   // Add 'content' class to attributes array instead of hardcoding it in the
   // node template so more classes can be added if needed.
   $vars['content_attributes_array']['class'][] = 'content';
-  // Add card classes to teasers.
+
+  // Add card classes to teasers and customize the read-more link.
   if (!empty($vars['teaser'])) {
     $vars['classes_array'][] = 'card';
     $vars['header_attributes_array']['class'][] = 'card-section';
     $vars['content_attributes_array']['class'][] = 'card-section';
     $vars['footer_attributes_array']['class'][] = 'card-section';
     $vars['content']['links']['#attributes']['class'][] = 'no-bullet';
-    foreach ($vars['content']['links']['node']['#links'] as &$link) {
-      foreach (['card-link', 'button', 'small'] as $class) {
+
+    foreach ($vars['content']['links']['node']['#links'] as $name => &$link) {
+      foreach (['button', 'small'] as $class) {
         $link['attributes']['class'][] = $class;
+      }
+      if ($name == 'node-readmore') {
+        $link['attributes']['class'][] = 'card-link';
+        // Remove link title.
+        unset($link['attributes']['title']);
+        // Replace button text per node type.
+        $title_stripped = strip_tags($vars['title']);
+        if (in_array($vars['type'], ['webform', 'petition', 'email_to_target'])) {
+          $link['title'] = t(
+            'Take action<span class="show-for-sr"> on @title</span>',
+            ['@title' => $title_stripped]
+          );
+        }
+        elseif ($vars['type'] == 'donation') {
+          $link['title'] = t(
+            'Donate now<span class="show-for-sr"> on @title</span>',
+            ['@title' => $title_stripped]
+          );
+        }
       }
     }
   }
