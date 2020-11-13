@@ -3,7 +3,7 @@
  *
  * Can be used with hidden "other" radio option; the checked radio is set via JavaScript.
  *
- * Sets `.select-or-other-checked` on the other textfield if it is selected.
+ * Toggles `.select-or-other-checked` on the other textfield’s wrapper.
  *
  * Optionally set the "Other label" as placeholder (e.g. in case the label is hidden).
  */
@@ -21,39 +21,25 @@
       return this;
     }
 
-    var $element = $(this);
-    var $radios = $element.find('input[type="radio"]');
-    var $otherRadio = $element.find('input[value="select_or_other"]');
-    var $normalRadios = $radios.not($otherRadio);
-    var $otherLabel = $element.find(
-      'label[for="' + $otherRadio.prop("id") + '"]'
-    );
-    var $otherText = $element.find('input[type="text"]');
+    $(this).each(function() {
+      var $element = $(this);
+      var $otherRadio = $element.find('input[value="select_or_other"]');
+      var $otherLabel = $element.find(
+        'label[for="' + $otherRadio.prop("id") + '"]'
+      );
+      var $otherText = $element.find('input[type="text"]');
 
-    // Get hidden other checkbox label and use it as placeholder in the other
-    // amount text field.
-    if (settings.setPlaceholder) {
-      $otherText.prop("placeholder", $otherLabel.text());
-    }
-
-    // Other amount text field with a valid value checks the other checkbox.
-    // Add class to other text field when other checkbox is checked.
-    function clearRadios(e) {
-      $otherRadio.prop("checked", true).trigger("change");
-      $otherText.parent().addClass("select-or-other-checked");
-    }
-    function clearTextField(e) {
-      if (!$otherRadio.prop("checked")) {
-        $otherText.parent().removeClass("select-or-other-checked");
+      // Get hidden other checkbox label and use it as placeholder in the other
+      // amount text field.
+      if (settings.setPlaceholder) {
+        $otherText.prop("placeholder", $otherLabel.text());
       }
-    }
-    // Switch to selected other textfield when user clicks into it or
-    // inputs/changes some data.
-    // Need to use 'input' (not 'change'), because other JS might trigger a
-    // change event on the textfield e.g. on page load (for prefilling).
-    $otherText.on("click", clearRadios);
-    $otherText.on("input", clearRadios);
-    $normalRadios.on("change", clearTextField);
+
+      // Add class to other text field when other checkbox is checked.
+      $element.bind('select-or-other-update', function (event, data) {
+        $otherText.parent().toggleClass('select-or-other-checked', data.otherSelected);
+      });
+    });
 
     // return self for chaining
     return this;
