@@ -343,8 +343,9 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
       $button_classes[] = $class;
     }
     // Remove `button-primary` class added by webform. We use just `primary`.
-    $x = array_search('button-primary', $button_classes);
-    unset($button_classes[$x]);
+    if ($x = array_search('button-primary', $button_classes) !== FALSE) {
+      unset($button_classes[$x]);
+    }
   }
   // Don’t wrap form buttons in container.
   $form['actions']['#theme_wrappers'] = [];
