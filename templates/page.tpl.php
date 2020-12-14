@@ -108,7 +108,7 @@
     </section>
     <?php endif; ?>
 
-    <?php if ($layout === 'cover-1col' && !empty($background_image)): ?>
+    <?php if (in_array($layout, ['cover-1col', 'cover-2col']) && !empty($background_image)): ?>
     <section id="background">
       <?php print render($background_image); ?>
     </section>
@@ -128,20 +128,22 @@
         <?php if ($layout === 'cover-1col'): ?><div class="inner-wrapper"><?php endif; ?>
 
           <div id="top">
-            <?php if ($title): ?>
-            <?php print render($title_prefix); ?>
-            <h1 id="page-title"><?php print $title; ?></h1>
-            <?php print render($title_suffix); ?>
-            <?php endif; ?>
+            <?php if ($layout === 'cover-2col'): ?><div class="inner-wrapper"><?php endif; ?>
+              <?php if ($title): ?>
+              <?php print render($title_prefix); ?>
+              <h1 id="page-title"><?php print $title; ?></h1>
+              <?php print render($title_suffix); ?>
+              <?php endif; ?>
 
-            <?php print render($page['help']); ?>
-            <?php if ($action_links): ?>
-              <ul class="action-links">
-                <?php print render($action_links); ?>
-              </ul>
-            <?php endif; ?>
+              <?php print render($page['help']); ?>
+              <?php if ($action_links): ?>
+                <ul class="action-links">
+                  <?php print render($action_links); ?>
+                </ul>
+              <?php endif; ?>
 
-            <?php print render($page['top']); ?>
+              <?php print render($page['top']); ?>
+            <?php if ($layout === 'cover-2col'): ?></div><?php endif; ?>
           </div>
 
           <?php if ($has_sidebar): ?>
@@ -161,9 +163,18 @@
           <?php endif; ?>
 
           <div id="content">
-            <?php print render($page['content_top']); ?>
-            <?php print render($page['content']); ?>
-            <?php print render($page['content_bottom']); ?>
+            <?php if ($layout === 'cover-2col'): ?>
+              <?php if ($rendered = render($page['content_top']) . render($page['content'])): ?>
+              <div class="inner-wrapper">
+                <?php print $rendered; ?>
+              </div>
+              <?php endif; ?>
+              <?php print render($page['content_bottom']); ?>
+            <?php else: ?>
+              <?php print render($page['content_top']); ?>
+              <?php print render($page['content']); ?>
+              <?php print render($page['content_bottom']); ?>
+            <?php endif; ?>
           </div>
 
         <?php if ($layout === 'cover-1col'): ?></div><?php endif; ?>
