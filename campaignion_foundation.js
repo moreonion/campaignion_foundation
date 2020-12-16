@@ -156,4 +156,41 @@ Drupal.behaviors.payment_slide.attach = function (context, settings) {
   });
 };
 
+/**
+ * Provide an event to act on form step changes.
+ *
+ * If no form step is yet known, assume we are initially loading a page with a
+ * webform.
+ *
+ * You can use this event to conditionally show/hide parts of a page.
+ *
+ * NB: We currently need to use native events to allow dispatching between
+ * different versions of jQuery (`.trigger()` and `.on()` communication
+ * between the Drupal's `$` and the the mo-foundation-base's `$` does not
+ * work).
+ */
+Drupal.behaviors.form_step_data = {};
+Drupal.behaviors.form_step_data.attach = function (context, settings) {
+  // current step is always a number > 0 if the settings information is correct
+  var currentStep;
+  try {
+    currentStep = settings.campaignion_foundation.webform.current_step || 1;
+  }
+  catch {
+    currentStep = 1;
+  }
+  currentStep = parseInt(currentStep, 10);
+  var previousStep = $("#page").attr("data-form-step") || 0;
+  previousStep = parseInt(previousStep, 10);
+
+  if (currentStep !== previousStep) {
+    var event = new CustomEvent("changeFormStep", {
+      detail: [currentStep, previousStep],
+    });
+    document.dispatchEvent(event);
+    // update known step
+    $("#page").attr("data-form-step", currentStep);
+  }
+};
+
 })(jQuery);

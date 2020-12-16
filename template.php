@@ -366,6 +366,21 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for webform_client_form().
+ *
+ * Provide the form step information in Drupal.settings for the behavior
+ * JavaScripts to pick up.
+ */
+function campaignion_foundation_form_webform_client_form_alter(&$form, &$form_state, $form_id) {
+  $settings['campaignion_foundation']['webform'] = [
+    'total_steps' => $form_state['webform']['page_count'],
+    'current_step' => $form_state['webform']['page_num'],
+    'last_completed_step' => $form_state['webform']['page_visited'] ?? 0,
+  ];
+  $form['#attached']['js'][] = ['data' => $settings, 'type' => 'setting'];
+}
+
+/**
  * Implements hook_payment_forms_payment_form_alter().
  */
 function campaignion_foundation_payment_forms_payment_form_alter(&$element, \Payment $payment) {
