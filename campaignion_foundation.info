@@ -5,6 +5,13 @@ name =  Campaignion Foundation Theme
 description = A base theme for using Foundation assets with Campaignion
 core = 7.x
 
+; Layouts --------------------------------------------------------------------
+; available theme layouts
+
+layout[] = banner
+layout[] = cover-1col
+layout[] = cover-2col
+
 ; Features -------------------------------------------------------------------
 ; available theme settings and their default values
 
