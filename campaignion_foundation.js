@@ -191,6 +191,12 @@ Drupal.behaviors.form_step_data.attach = function (context, settings) {
     // update known step
     $("#page").attr("data-form-step", currentStep);
   }
+  else {
+    var event = new CustomEvent("sameFormStep", {
+      detail: [currentStep, previousStep],
+    });
+    document.dispatchEvent(event);
+  }
 };
 
 })(jQuery);
