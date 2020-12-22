@@ -185,7 +185,7 @@ Drupal.behaviors.form_step_data.attach = function (context, settings) {
 
   if (currentStep !== previousStep) {
     var event = new CustomEvent("changeFormStep", {
-      detail: [currentStep, previousStep],
+      detail: { current: currentStep, previous: previousStep },
     });
     document.dispatchEvent(event);
     // update known step
@@ -193,7 +193,7 @@ Drupal.behaviors.form_step_data.attach = function (context, settings) {
   }
   else {
     var event = new CustomEvent("sameFormStep", {
-      detail: [currentStep, previousStep],
+      detail: { current: currentStep, previous: previousStep },
     });
     document.dispatchEvent(event);
   }
