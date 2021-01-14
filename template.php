@@ -54,6 +54,15 @@ function campaignion_foundation_campaignion_layout_info() {
       ],
     ],
   ];
+  $info['cover-banner'] = [
+    'title' => t('Fixed banner layout'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
   return $info;
 }
 

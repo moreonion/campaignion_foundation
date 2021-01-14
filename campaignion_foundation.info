@@ -9,6 +9,7 @@ core = 7.x
 ; available theme layouts
 
 layout[] = banner
+layout[] = cover-banner
 layout[] = cover-1col
 layout[] = cover-2col
 
