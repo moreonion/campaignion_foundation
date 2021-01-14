@@ -102,6 +102,12 @@ function campaignion_foundation_preprocess_page(&$vars) {
   $teaser_blocks = ['views_actions-block', 'views_actions_promoted-block'];
   $content_blocks = array_keys($vars['page']['content_top'] + $vars['page']['content'] + $vars['page']['content_bottom']);
   $has_teasers = current_path() == 'node' || array_intersect($teaser_blocks, $content_blocks);
+  if ($vars['layout'] === 'cover-banner' && $has_sidebar) {
+    // Is anything left in the sidebar besides form blocks?
+    $has_sidebar = !empty(array_filter($vars['page']['sidebar_first'] + $vars['page']['sidebar_second'], function ($key) use ($vars) {
+      return strpos($key, '#') !== 0 && !in_array($key, $vars['form_blocks']);
+    }, ARRAY_FILTER_USE_KEY));
+  }
   $vars['has_sidebar'] = $has_sidebar;
   $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
   // Layout helper classes.

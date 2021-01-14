@@ -108,7 +108,7 @@
     </section>
     <?php endif; ?>
 
-    <?php if (in_array($layout, ['cover-1col', 'cover-2col']) && !empty($background_image)): ?>
+    <?php if (in_array($layout, ['cover-1col', 'cover-2col', 'cover-banner']) && !empty($background_image)): ?>
     <section id="background">
       <?php print render($background_image); ?>
     </section>
@@ -118,6 +118,22 @@
     <section id="messages">
       <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?>">
         <?php print $messages; ?>
+      </div>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($layout === 'cover-banner'): ?>
+    <section id="banner-content">
+      <div class="grid-container with sidebar">
+        <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
+        <div id=form-wrapper class="flex-container align-middle">
+          <div id="form-outer">
+            <?php foreach ($existing_form_blocks as $block): ?>
+              <?php print render($page['sidebar_second'][$block]); ?>
+            <?php endforeach; ?>
+          </div>
+        </div>
+        <?php endif; ?>
       </div>
     </section>
     <?php endif; ?>
@@ -146,7 +162,7 @@
             <?php if ($layout === 'cover-2col'): ?></div><?php endif; ?>
           </div>
 
-          <?php if ($has_sidebar): ?>
+          <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
             <?php if (!$is_narrow): ?><div id="sidebar"><?php endif; ?>
               <?php print render($page['sidebar_first']); ?>
               <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
@@ -176,6 +192,13 @@
               <?php print render($page['content_bottom']); ?>
             <?php endif; ?>
           </div>
+
+          <?php if ($has_sidebar && $layout === 'cover-banner'): ?>
+          <div id="sidebar">
+            <?php print render($page['sidebar_first']); ?>
+            <?php print render($page['sidebar_second']); ?>
+          </div>
+          <?php endif; ?>
 
         <?php if ($layout === 'cover-1col'): ?></div><?php endif; ?>
 
