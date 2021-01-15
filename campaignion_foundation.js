@@ -171,14 +171,13 @@ Drupal.behaviors.payment_slide.attach = function (context, settings) {
  */
 Drupal.behaviors.form_step_data = {};
 Drupal.behaviors.form_step_data.attach = function (context, settings) {
-  // current step is always a number > 0 if the settings information is correct
-  var currentStep;
-  try {
-    currentStep = settings.campaignion_foundation.webform.current_step || 1;
+  // Return early if we are on a node without webform.
+  if (!(settings.campaignion_foundation && settings.campaignion_foundation.webform)) {
+    return
   }
-  catch {
-    currentStep = 1;
-  }
+  // Current step is always a number > 0 if the settings information is correct.
+  var currentStep = settings.campaignion_foundation.webform.current_step || 1;
+
   currentStep = parseInt(currentStep, 10);
   var previousStep = $("#page").attr("data-form-step") || 0;
   previousStep = parseInt(previousStep, 10);
