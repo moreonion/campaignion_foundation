@@ -27,6 +27,9 @@ include 'includes/theme_webform_time.inc';
  * Make theme layouts available.
  */
 function campaignion_foundation_campaignion_layout_info() {
+  $info['default'] = [
+    'title' => t('A: Standard (2 columns)'),
+  ];
   $info['banner'] = [
     'title' => t('B: Banner image (2 columns)'),
     'fields' => [
