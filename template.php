@@ -45,6 +45,15 @@ function campaignion_foundation_campaignion_layout_info() {
       ],
     ],
   ];
+  $info['cover-2col'] = [
+    'title' => t('Fixed background 2 column layout'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
   return $info;
 }
 
@@ -86,6 +95,12 @@ function campaignion_foundation_preprocess_page(&$vars) {
   $has_teasers = current_path() == 'node' || array_intersect($teaser_blocks, $content_blocks);
   $vars['has_sidebar'] = $has_sidebar;
   $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
+  // Layout helper classes.
+  if ($vars['layout'] === 'cover-2col') {
+    foreach (element_children($vars['page']['content_bottom']) as $child) {
+      $vars['page']['content_bottom'][$child]['#layout_class'] = 'inner-wrapper';
+    }
+  }
 }
 
 /**
@@ -170,8 +185,14 @@ function campaignion_foundation_preprocess_block(&$vars) {
   if ($vars['block']->module == 'recent_supporters') {
     $vars['title_attributes_array']['class'][] = 'recent-supporters-title';
   }
+  if ($vars['block']->delta == 'pgbar_default') {
+    $vars['title_attributes_array']['class'][] = 'progress-title';
+  }
   if ((current_path() == 'node' && $vars['block']->module == 'system')) {
     $vars['content_attributes_array']['class'][] = 'teasers';
+  }
+  if (!empty($vars['elements']['#layout_class'])) {
+    $vars['classes_array'][] = $vars['elements']['#layout_class'];
   }
 }
 
