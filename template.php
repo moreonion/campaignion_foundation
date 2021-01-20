@@ -358,14 +358,14 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   // Edit submit button classes.
   $classes = ['large', 'expanded', 'primary', 'button'];
   foreach (array_values(['next', 'submit']) as $type) {
-    if (isset($form['actions'][$type])) {
-      $button_classes = &$form['actions'][$type]['#attributes']['class'];
+    if (isset($form['actions'][$type]) && ($button = &$form['actions'][$type])) {
+      $button_classes = $button['#attributes']['class'] ?? [];
       // Remove `button-primary` class added by webform. We use just `primary`.
       $button_classes = array_filter($button_classes, function ($class) {
         return $class !== 'button-primary';
       });
       // Add submit button classes.
-      $button_classes = array_merge($button_classes, $classes);
+      $button['#attributes']['class'] = array_merge($button_classes, $classes);
     }
   }
   // Don’t wrap form buttons in container.
