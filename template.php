@@ -370,9 +370,14 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   }
   // Don’t wrap form buttons in container.
   $form['actions']['#theme_wrappers'] = [];
-  // Hide step buttons.
-  $form['step_buttons']['#attributes']['class'][] = 'show-for-sr';
-  $form['actions']['previous']['#attributes']['class'][] = 'show-for-sr';
+  // Hide step button (webform_steps).
+  if (isset($form['step_buttons'])) {
+    $form['step_buttons']['#attributes']['class'][] = 'show-for-sr';
+  }
+  // Hide previous buttons on webforms.
+  if (isset($form['actions']['previous'])) {
+    $form['actions']['previous']['#attributes']['class'][] = 'show-for-sr';
+  }
 
   // Add wrapper class for extra space on some form elements.
   $elements = $form;
