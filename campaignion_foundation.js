@@ -169,32 +169,53 @@ Drupal.behaviors.payment_slide.attach = function (context, settings) {
  * between the Drupal's `$` and the the mo-foundation-base's `$` does not
  * work).
  */
-Drupal.behaviors.form_step_data = {};
-Drupal.behaviors.form_step_data.attach = function (context, settings) {
+Drupal.behaviors.form_steps = {};
+Drupal.behaviors.form_steps.attach = function (context, settings) {
   // Return early if we are on a node without webform.
   if (!(settings.campaignion_foundation && settings.campaignion_foundation.webform)) {
     return
   }
+
   // Current step is always a number > 0 if the settings information is correct.
   var currentStep = settings.campaignion_foundation.webform.current_step || 1;
-
   currentStep = parseInt(currentStep, 10);
   var previousStep = $("#page").attr("data-form-step") || 0;
   previousStep = parseInt(previousStep, 10);
 
-  if (currentStep !== previousStep) {
-    var event = new CustomEvent("changeFormStep", {
-      detail: { current: currentStep, previous: previousStep },
+  // Set current step on #page as data attribute.
+  // Usable also in CSS.
+  $("#page").attr("data-form-step", currentStep);
+
+  // Determine which event to dispatch by looking at the context.
+  if (context === document) {
+    var event = new CustomEvent("initialFormStep", {
+      detail: {
+        form: settings.campaignion_foundation.webform,
+        current: currentStep,
+        previous: previousStep
+      }
     });
     document.dispatchEvent(event);
-    // update known step
-    $("#page").attr("data-form-step", currentStep);
   }
-  else {
-    var event = new CustomEvent("sameFormStep", {
-      detail: { current: currentStep, previous: previousStep },
+  else if ($(context).is('[id^=webform-ajax-wrapper]')) {
+    var event = new CustomEvent("changeFormStep", {
+      detail: {
+        form: settings.campaignion_foundation.webform,
+        current: currentStep,
+        previous: previousStep
+      },
     });
     document.dispatchEvent(event);
+
+    // afterFirstFormStep dispatched only once
+    $('#page').once('form-steps').each(function () {
+      var event = new CustomEvent("afterFirstFormStep", {
+        detail: {
+          form: settings.campaignion_foundation.webform
+        }
+      });
+      document.dispatchEvent(event);
+    });
   }
 };
 
