@@ -98,15 +98,18 @@ function campaignion_foundation_preprocess_page(&$vars) {
   ];
   // Layout helper variables.
   $is_single_column = in_array($vars['layout'], ['cover-1col']);
-  $has_sidebar = !empty($vars['page']['sidebar_first'] || $vars['page']['sidebar_second']);
   $teaser_blocks = ['views_actions-block', 'views_actions_promoted-block'];
-  $content_blocks = array_keys($vars['page']['content_top'] + $vars['page']['content'] + $vars['page']['content_bottom']);
+  $content_blocks = $vars['page']['content_top'] + $vars['page']['content'] + $vars['page']['content_bottom'];
+  $content_blocks = element_children($content_blocks);
+  $sidebar_blocks = $vars['page']['sidebar_first'] + $vars['page']['sidebar_second'];
+  $sidebar_blocks = element_children($sidebar_blocks);
   $has_teasers = current_path() == 'node' || array_intersect($teaser_blocks, $content_blocks);
+  $has_sidebar = !empty($sidebar_blocks);
   if ($vars['layout'] === 'cover-banner' && $has_sidebar) {
     // Is anything left in the sidebar besides form blocks?
-    $has_sidebar = !empty(array_filter($vars['page']['sidebar_first'] + $vars['page']['sidebar_second'], function ($key) use ($vars) {
-      return strpos($key, '#') !== 0 && !in_array($key, $vars['form_blocks']);
-    }, ARRAY_FILTER_USE_KEY));
+    $has_sidebar = !empty(array_filter($sidebar_blocks, function ($block) use ($vars) {
+      return !in_array($block, $vars['form_blocks']);
+    }));
   }
   $vars['has_sidebar'] = $has_sidebar;
   $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
