@@ -372,12 +372,20 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
  * JavaScripts to pick up.
  */
 function campaignion_foundation_form_webform_client_form_alter(&$form, &$form_state, $form_id) {
-  $settings['campaignion_foundation']['webform'] = [
-    'total_steps' => $form_state['webform']['page_count'],
-    'current_step' => $form_state['webform']['page_num'],
-    'last_completed_step' => $form_state['webform']['page_visited'] ?? 0,
-  ];
-  $form['#attached']['js'][] = ['data' => $settings, 'type' => 'setting'];
+  // When the page nid and the webform's nid are the same we treat the form as
+  // the "main form" of the page. Only the main form determines the current
+  // step.
+  $is_page_node = ($node = menu_get_object()) && $node->nid == $form['#node']->nid;
+  if ($is_page_node) {
+    $settings['campaignion_foundation']['webform'] = [
+      'total_steps' => $form_state['webform']['page_count'],
+      'current_step' => $form_state['webform']['page_num'],
+      'last_completed_step' => $form_state['webform']['page_visited'] ?? 0,
+      'id' => $form_id,
+      'selector' => '.webform-client-form-' . $node->nid,
+    ];
+    $form['#attached']['js'][] = ['data' => $settings, 'type' => 'setting'];
+  }
 }
 
 /**
