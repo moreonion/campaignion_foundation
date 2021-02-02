@@ -27,17 +27,11 @@ include 'includes/theme_webform_time.inc';
  * Make theme layouts available.
  */
 function campaignion_foundation_campaignion_layout_info() {
-  $info['banner'] = [
-    'title' => t('Big banner layout'),
-    'fields' => [
-      'layout_background_image' => [
-        'variable' => 'background_image',
-        'display' => [],
-      ],
-    ],
+  $info['default'] = [
+    'title' => t('A: Standard (2 columns)'),
   ];
-  $info['cover-1col'] = [
-    'title' => t('Fixed background 1 column layout'),
+  $info['banner'] = [
+    'title' => t('B: Banner image (2 columns)'),
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
@@ -46,7 +40,7 @@ function campaignion_foundation_campaignion_layout_info() {
     ],
   ];
   $info['cover-2col'] = [
-    'title' => t('Fixed background 2 column layout'),
+    'title' => t('C: Fixed background image (2 columns)'),
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
@@ -55,7 +49,16 @@ function campaignion_foundation_campaignion_layout_info() {
     ],
   ];
   $info['cover-banner'] = [
-    'title' => t('Fixed banner layout'),
+    'title' => t('D: Fixed banner image (2 columns)'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
+  $info['cover-1col'] = [
+    'title' => t('E: Fixed background image (1 column)'),
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
