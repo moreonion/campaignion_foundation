@@ -156,4 +156,67 @@ Drupal.behaviors.payment_slide.attach = function (context, settings) {
   });
 };
 
+/**
+ * Provide an event to act on form step changes.
+ *
+ * If no form step is yet known, assume we are initially loading a page with a
+ * webform.
+ *
+ * You can use this event to conditionally show/hide parts of a page.
+ *
+ * NB: We currently need to use native events to allow dispatching between
+ * different versions of jQuery (`.trigger()` and `.on()` communication
+ * between the Drupal's `$` and the the mo-foundation-base's `$` does not
+ * work).
+ */
+Drupal.behaviors.form_steps = {};
+Drupal.behaviors.form_steps.attach = function (context, settings) {
+  // Return early if we are on a node without webform.
+  if (!(settings.campaignion_foundation && settings.campaignion_foundation.webform)) {
+    return
+  }
+
+  // Current step is always a number > 0 if the settings information is correct.
+  var currentStep = settings.campaignion_foundation.webform.current_step || 1;
+  currentStep = parseInt(currentStep, 10);
+  var previousStep = $("#page").attr("data-form-step") || 0;
+  previousStep = parseInt(previousStep, 10);
+
+  // Set current step on #page as data attribute.
+  // Usable also in CSS.
+  $("#page").attr("data-form-step", currentStep);
+
+  // Determine which event to dispatch by looking at the context.
+  if (context === document) {
+    var event = new CustomEvent("initialFormStep", {
+      detail: {
+        form: settings.campaignion_foundation.webform,
+        current: currentStep,
+        previous: previousStep
+      }
+    });
+    document.dispatchEvent(event);
+  }
+  else if ($(context).is('[id^=webform-ajax-wrapper]')) {
+    var event = new CustomEvent("changeFormStep", {
+      detail: {
+        form: settings.campaignion_foundation.webform,
+        current: currentStep,
+        previous: previousStep
+      },
+    });
+    document.dispatchEvent(event);
+
+    // afterFirstFormStep dispatched only once
+    $('#page').once('form-steps').each(function () {
+      var event = new CustomEvent("afterFirstFormStep", {
+        detail: {
+          form: settings.campaignion_foundation.webform
+        }
+      });
+      document.dispatchEvent(event);
+    });
+  }
+};
+
 })(jQuery);
