@@ -1,14 +1,16 @@
 ; Theme Info -----------------------------------------------------------------
 ; required information about the theme
 
-name =  Campaignion Foundation Theme
-description = A base theme for using Foundation assets with Campaignion
+name =  Impact Stack standard theme
+description = A base theme for using Foundation assets with Campaignion/Impact Stack.
 core = 7.x
 
 ; Layouts --------------------------------------------------------------------
 ; available theme layouts
 
+layout[] = default
 layout[] = banner
+layout[] = cover-banner
 layout[] = cover-1col
 layout[] = cover-2col
 

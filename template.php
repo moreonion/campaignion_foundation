@@ -27,17 +27,11 @@ include 'includes/theme_webform_time.inc';
  * Make theme layouts available.
  */
 function campaignion_foundation_campaignion_layout_info() {
-  $info['banner'] = [
-    'title' => t('Big banner layout'),
-    'fields' => [
-      'layout_background_image' => [
-        'variable' => 'background_image',
-        'display' => [],
-      ],
-    ],
+  $info['default'] = [
+    'title' => t('A: Standard (2 columns)'),
   ];
-  $info['cover-1col'] = [
-    'title' => t('Fixed background 1 column layout'),
+  $info['banner'] = [
+    'title' => t('B: Banner image (2 columns)'),
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
@@ -46,7 +40,25 @@ function campaignion_foundation_campaignion_layout_info() {
     ],
   ];
   $info['cover-2col'] = [
-    'title' => t('Fixed background 2 column layout'),
+    'title' => t('C: Fixed background image (2 columns)'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
+  $info['cover-banner'] = [
+    'title' => t('D: Fixed banner image (2 columns)'),
+    'fields' => [
+      'layout_background_image' => [
+        'variable' => 'background_image',
+        'display' => [],
+      ],
+    ],
+  ];
+  $info['cover-1col'] = [
+    'title' => t('E: Fixed background image (1 column)'),
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
@@ -89,14 +101,23 @@ function campaignion_foundation_preprocess_page(&$vars) {
   ];
   // Layout helper variables.
   $is_single_column = in_array($vars['layout'], ['cover-1col']);
-  $has_sidebar = !empty($vars['page']['sidebar_first'] || $vars['page']['sidebar_second']);
   $teaser_blocks = ['views_actions-block', 'views_actions_promoted-block'];
-  $content_blocks = array_keys($vars['page']['content_top'] + $vars['page']['content'] + $vars['page']['content_bottom']);
+  $content_blocks = ($vars['page']['content_top'] ?? []) + ($vars['page']['content'] ?? []) + ($vars['page']['content_bottom'] ?? []);
+  $content_blocks = element_children($content_blocks);
+  $sidebar_blocks = ($vars['page']['sidebar_first'] ?? []) + ($vars['page']['sidebar_second'] ?? []);
+  $sidebar_blocks = element_children($sidebar_blocks);
   $has_teasers = current_path() == 'node' || array_intersect($teaser_blocks, $content_blocks);
+  $has_sidebar = !empty($sidebar_blocks);
+  if ($vars['layout'] === 'cover-banner' && $has_sidebar) {
+    // Is anything left in the sidebar besides form blocks?
+    $has_sidebar = !empty(array_filter($sidebar_blocks, function ($block) use ($vars) {
+      return !in_array($block, $vars['form_blocks']);
+    }));
+  }
   $vars['has_sidebar'] = $has_sidebar;
   $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
   // Layout helper classes.
-  if ($vars['layout'] === 'cover-2col') {
+  if ($vars['layout'] === 'cover-2col' && !empty($vars['page']['content_bottom'])) {
     foreach (element_children($vars['page']['content_bottom']) as $child) {
       $vars['page']['content_bottom'][$child]['#layout_class'] = 'inner-wrapper';
     }
