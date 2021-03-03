@@ -171,13 +171,11 @@
               <?php endif; ?>
               <?php print render($page['sidebar_second']); ?>
             </div>
-          <?php elseif ($layout === 'cover-1col'): ?>
-            <?php if (!empty($page['sidebar_first'])): ?>
+
+          <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
             <div id="form-outer">
               <?php print render($page['sidebar_first']); ?>
             </div>
-            <?php endif; ?>
-            <?php print render($page['sidebar_second']); ?>
           <?php endif; ?>
 
           <div id="content">
@@ -201,7 +199,10 @@
           </div>
           <?php endif; ?>
 
-        <?php if ($layout === 'cover-1col'): ?></div><?php endif; ?>
+        <?php if ($layout === 'cover-1col'): ?>
+          <?php print render($page['sidebar_second']); ?>
+        </div>
+        <?php endif; ?>
 
       </div>
     </section>
