@@ -169,7 +169,9 @@
                   </div>
                 </div>
               <?php endif; ?>
-              <?php print render($page['sidebar_second']); ?>
+              <?php if ($layout !== 'cover-2col'): ?>
+                <?php print render($page['sidebar_second']); ?>
+              <?php endif; ?>
             </div>
 
           <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
@@ -180,12 +182,17 @@
 
           <div id="content">
             <?php if ($layout === 'cover-2col'): ?>
-              <?php if ($rendered = render($page['content_top']) . render($page['content'])): ?>
               <div class="inner-wrapper">
-                <?php print $rendered; ?>
+                <?php print render($page['content_top']); ?>
+                <?php print render($page['content']); ?>
+                <?php print render($page['content_bottom']); ?>
+              </div>
+              <?php if (!empty($page['sidebar_second'])): ?>
+              <div class="inner-wrapper">
+                <?php print render($page['sidebar_second']); ?>
               </div>
               <?php endif; ?>
-              <?php print render($page['content_bottom']); ?>
+
             <?php else: ?>
               <?php print render($page['content_top']); ?>
               <?php print render($page['content']); ?>
