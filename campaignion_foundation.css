@@ -66,6 +66,7 @@ html.js .js-hide {
 /**
  * Styles needed for specific elements added by webform.
  */
+ /* Date picker */
 input.webform-calendar {
   display: none;
   padding: 3px;
@@ -74,6 +75,16 @@ input.webform-calendar {
 }
 html.js input.webform-calendar {
   display: inline;
+}
+/* Collapsible fieldsets */
+html.js fieldset.collapsed .fieldset-wrapper {
+  display: none;
+}
+fieldset.collapsible {
+  position: relative;
+}
+fieldset.collapsible .fieldset-legend {
+  display: block;
 }
 
 /**
