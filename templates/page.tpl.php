@@ -125,12 +125,10 @@
     <?php if ($layout === 'cover-banner'): ?>
     <section id="banner-content">
       <div class="grid-container with sidebar">
-        <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
+        <?php if (!empty($page['sidebar_first'])): ?>
         <div id=form-wrapper class="flex-container align-middle">
           <div id="form-outer">
-            <?php foreach ($existing_form_blocks as $block): ?>
-              <?php print render($page['sidebar_second'][$block]); ?>
-            <?php endforeach; ?>
+            <?php print render($page['sidebar_first']); ?>
           </div>
         </div>
         <?php endif; ?>
@@ -139,7 +137,7 @@
     <?php endif; ?>
 
     <section id="main">
-      <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?><?php print (!$is_narrow && $has_sidebar ? ' with-sidebar' : ''); ?>">
+      <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?><?php print ($has_sidebar ? ' with-sidebar' : ''); ?>">
 
         <?php if ($layout === 'cover-1col'): ?><div class="inner-wrapper"><?php endif; ?>
 
@@ -163,29 +161,38 @@
           </div>
 
           <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
-            <?php if (!$is_narrow): ?><div id="sidebar"><?php endif; ?>
-              <?php print render($page['sidebar_first']); ?>
-              <?php if ($existing_form_blocks = array_intersect($form_blocks, array_keys($page['sidebar_second']))): ?>
+            <div id="sidebar">
+              <?php if (!empty($page['sidebar_first'])): ?>
                 <div id=form-wrapper class="flex-container align-middle">
                   <div id="form-outer">
-                    <?php foreach ($existing_form_blocks as $block): ?>
-                      <?php print render($page['sidebar_second'][$block]); ?>
-                    <?php endforeach; ?>
+                    <?php print render($page['sidebar_first']); ?>
                   </div>
                 </div>
               <?php endif; ?>
-              <?php print render($page['sidebar_second']); ?>
-            <?php if (!$is_narrow): ?></div><?php endif; ?>
+              <?php if ($layout !== 'cover-2col'): ?>
+                <?php print render($page['sidebar_second']); ?>
+              <?php endif; ?>
+            </div>
+
+          <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <div id="form-outer">
+              <?php print render($page['sidebar_first']); ?>
+            </div>
           <?php endif; ?>
 
           <div id="content">
             <?php if ($layout === 'cover-2col'): ?>
-              <?php if ($rendered = render($page['content_top']) . render($page['content'])): ?>
               <div class="inner-wrapper">
-                <?php print $rendered; ?>
+                <?php print render($page['content_top']); ?>
+                <?php print render($page['content']); ?>
+                <?php print render($page['content_bottom']); ?>
+              </div>
+              <?php if (!empty($page['sidebar_second'])): ?>
+              <div class="inner-wrapper">
+                <?php print render($page['sidebar_second']); ?>
               </div>
               <?php endif; ?>
-              <?php print render($page['content_bottom']); ?>
+
             <?php else: ?>
               <?php print render($page['content_top']); ?>
               <?php print render($page['content']); ?>
@@ -193,14 +200,16 @@
             <?php endif; ?>
           </div>
 
-          <?php if ($has_sidebar && $layout === 'cover-banner'): ?>
+          <?php if ($layout === 'cover-banner' && $has_sidebar): ?>
           <div id="sidebar">
-            <?php print render($page['sidebar_first']); ?>
             <?php print render($page['sidebar_second']); ?>
           </div>
           <?php endif; ?>
 
-        <?php if ($layout === 'cover-1col'): ?></div><?php endif; ?>
+        <?php if ($layout === 'cover-1col'): ?>
+          <?php print render($page['sidebar_second']); ?>
+        </div>
+        <?php endif; ?>
 
       </div>
     </section>

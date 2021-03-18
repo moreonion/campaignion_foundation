@@ -93,12 +93,6 @@ function campaignion_foundation_preprocess_html(&$vars) {
  * Prepares variables for page templates.
  */
 function campaignion_foundation_preprocess_page(&$vars) {
-  // Define the fields which constitute the form fields.
-  $vars['form_blocks'] = [
-    'cck_blocks_field_form_intro',
-    'cck_blocks_pgbar_default',
-    'webform_block_current',
-  ];
   // Layout helper variables.
   $is_single_column = in_array($vars['layout'], ['cover-1col']);
   $teaser_blocks = ['views_actions-block', 'views_actions_promoted-block'];
@@ -109,19 +103,10 @@ function campaignion_foundation_preprocess_page(&$vars) {
   $has_teasers = current_path() == 'node' || array_intersect($teaser_blocks, $content_blocks);
   $has_sidebar = !empty($sidebar_blocks);
   if ($vars['layout'] === 'cover-banner' && $has_sidebar) {
-    // Is anything left in the sidebar besides form blocks?
-    $has_sidebar = !empty(array_filter($sidebar_blocks, function ($block) use ($vars) {
-      return !in_array($block, $vars['form_blocks']);
-    }));
+    $has_sidebar = !empty($vars['page']['sidebar_second']);
   }
-  $vars['has_sidebar'] = $has_sidebar;
+  $vars['has_sidebar'] = $has_sidebar && !$is_single_column;
   $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
-  // Layout helper classes.
-  if ($vars['layout'] === 'cover-2col' && !empty($vars['page']['content_bottom'])) {
-    foreach (element_children($vars['page']['content_bottom']) as $child) {
-      $vars['page']['content_bottom'][$child]['#layout_class'] = 'inner-wrapper';
-    }
-  }
 }
 
 /**
