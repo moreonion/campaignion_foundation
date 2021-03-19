@@ -37,9 +37,7 @@ function campaignion_foundation_status_messages($variables) {
       $output .= reset($messages);
     }
     // Add close button.
-    $output .= '<button class="close-button" aria-label="Dismiss alert" type="button" data-close>' . "\n";
-    $output .= '<span aria-hidden="true">&times;</span>' . "\n";
-    $output .= "</button>\n";
+    $output .= '<button class="close-button" aria-label="Dismiss alert" type="button" data-close></button>' . "\n";
 
     $output .= "</div>\n";
   }
