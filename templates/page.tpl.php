@@ -58,6 +58,8 @@
  * Layout (theme specfic variables):
  * - $has_sidebar: TRUE when there is any content in a sidebar region.
  * - $is_narrow: TRUE when the layout asks for a narrow grid.
+ * - $reversed: TRUE when the layout supports displaying the form below the
+ *   main content and it is enabled.
  *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
@@ -73,7 +75,6 @@
  * @see template_process()
  * @see html.tpl.php
  */
-$form_below_main = $order_enabled && $order === 'below-main';
 ?>
   <div id="page" class="<?php print $layout ?? 'default'; ?>-layout">
 
@@ -161,7 +162,7 @@ $form_below_main = $order_enabled && $order === 'below-main';
             <?php if ($layout === 'cover-2col'): ?></div><?php endif; ?>
           </div>
 
-          <?php if (!$form_below_main): ?>
+          <?php if (empty($reversed)): ?>
             <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
               <div id="sidebar">
                 <?php if (!empty($page['sidebar_first'])): ?>
@@ -203,7 +204,7 @@ $form_below_main = $order_enabled && $order === 'below-main';
             <?php endif; ?>
           </div>
 
-          <?php if ($form_below_main): ?>
+          <?php if (!empty($reversed)): ?>
             <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
               <div id="sidebar">
                 <?php if (!empty($page['sidebar_first'])): ?>

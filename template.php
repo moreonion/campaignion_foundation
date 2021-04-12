@@ -29,7 +29,7 @@ include 'includes/theme_webform_time.inc';
 function campaignion_foundation_campaignion_layout_info() {
   $info['default'] = [
     'title' => t('A: Standard (2 columns)'),
-    'order_enabled' => TRUE,
+    'reversable' => TRUE,
   ];
   $info['banner'] = [
     'title' => t('B: Banner image (2 columns)'),
@@ -39,7 +39,7 @@ function campaignion_foundation_campaignion_layout_info() {
         'display' => [],
       ],
     ],
-    'order_enabled' => TRUE,
+    'reversable' => TRUE,
   ];
   $info['cover-2col'] = [
     'title' => t('C: Fixed background image (2 columns)'),
@@ -49,7 +49,7 @@ function campaignion_foundation_campaignion_layout_info() {
         'display' => [],
       ],
     ],
-    'order_enabled' => TRUE,
+    'reversable' => TRUE,
   ];
   $info['cover-banner'] = [
     'title' => t('D: Fixed banner image (2 columns)'),
