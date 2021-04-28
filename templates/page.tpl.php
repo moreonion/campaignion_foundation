@@ -58,6 +58,8 @@
  * Layout (theme specfic variables):
  * - $has_sidebar: TRUE when there is any content in a sidebar region.
  * - $is_narrow: TRUE when the layout asks for a narrow grid.
+ * - $reversed: TRUE when the layout supports displaying the form below the
+ *   main content and it is enabled.
  *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
@@ -160,24 +162,26 @@
             <?php if ($layout === 'cover-2col'): ?></div><?php endif; ?>
           </div>
 
-          <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
-            <div id="sidebar">
-              <?php if (!empty($page['sidebar_first'])): ?>
-                <div id=form-wrapper class="flex-container align-middle">
-                  <div id="form-outer">
-                    <?php print render($page['sidebar_first']); ?>
+          <?php if (empty($reversed)): ?>
+            <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
+              <div id="sidebar">
+                <?php if (!empty($page['sidebar_first'])): ?>
+                  <div id=form-wrapper class="flex-container align-middle">
+                    <div id="form-outer">
+                      <?php print render($page['sidebar_first']); ?>
+                    </div>
                   </div>
-                </div>
-              <?php endif; ?>
-              <?php if ($layout !== 'cover-2col'): ?>
-                <?php print render($page['sidebar_second']); ?>
-              <?php endif; ?>
-            </div>
+                <?php endif; ?>
+                <?php if ($layout !== 'cover-2col'): ?>
+                  <?php print render($page['sidebar_second']); ?>
+                <?php endif; ?>
+              </div>
 
-          <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
-            <div id="form-outer">
-              <?php print render($page['sidebar_first']); ?>
-            </div>
+            <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+              <div id="form-outer">
+                <?php print render($page['sidebar_first']); ?>
+              </div>
+            <?php endif; ?>
           <?php endif; ?>
 
           <div id="content">
@@ -199,6 +203,28 @@
               <?php print render($page['content_bottom']); ?>
             <?php endif; ?>
           </div>
+
+          <?php if (!empty($reversed)): ?>
+            <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
+              <div id="sidebar">
+                <?php if (!empty($page['sidebar_first'])): ?>
+                  <div id=form-wrapper class="flex-container align-middle">
+                    <div id="form-outer">
+                      <?php print render($page['sidebar_first']); ?>
+                    </div>
+                  </div>
+                <?php endif; ?>
+                <?php if ($layout !== 'cover-2col'): ?>
+                  <?php print render($page['sidebar_second']); ?>
+                <?php endif; ?>
+              </div>
+
+            <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+              <div id="form-outer">
+                <?php print render($page['sidebar_first']); ?>
+              </div>
+            <?php endif; ?>
+          <?php endif; ?>
 
           <?php if ($layout === 'cover-banner' && $has_sidebar): ?>
           <div id="sidebar">
