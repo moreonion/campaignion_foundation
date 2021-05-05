@@ -76,7 +76,7 @@
  * @see html.tpl.php
  */
 ?>
-  <div id="page" class="<?php print $layout ?? 'default'; ?>-layout">
+  <div id="page" class="<?php print drupal_clean_css_identifier($layout) ?? 'default'; ?>-layout">
 
     <section id="header">
       <div class="top-bar grid-container">
