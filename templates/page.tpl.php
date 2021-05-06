@@ -162,8 +162,8 @@
             <?php if ($layout === 'cover-2col'): ?></div><?php endif; ?>
           </div>
 
-          <?php if (empty($reversed)): ?>
-            <?php if (!empty($page['sidebar_first']) && $layout !== 'cover-banner'): ?>
+          <?php if (empty($reversed) && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php if ($has_sidebar): ?>
               <div id="sidebar">
                 <div id=form-wrapper class="flex-container align-middle">
                   <div id="form-outer">
@@ -172,7 +172,7 @@
                 </div>
               </div>
 
-            <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php elseif ($is_narrow): ?>
               <div id="form-outer">
                 <?php print render($page['sidebar_first']); ?>
               </div>
@@ -194,8 +194,8 @@
             <?php endif; ?>
           </div>
 
-          <?php if (!empty($reversed)): ?>
-            <?php if (!empty($page['sidebar_first']) && $layout !== 'cover-banner'): ?>
+          <?php if (!empty($reversed) && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php if ($has_sidebar): ?>
               <div id="sidebar">
                 <div id=form-wrapper class="flex-container align-middle">
                   <div id="form-outer">
@@ -204,7 +204,7 @@
                 </div>
               </div>
 
-            <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php elseif ($is_narrow): ?>
               <div id="form-outer">
                 <?php print render($page['sidebar_first']); ?>
               </div>
