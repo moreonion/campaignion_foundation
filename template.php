@@ -284,6 +284,22 @@ function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars)
 }
 
 /**
+ * Prepares variables for mimemail message templates.
+ */
+function campaignion_foundation_preprocess_mimemail_message(&$vars) {
+  $theme = mailsystem_get_mail_theme();
+  $themepath = drupal_get_path('theme', $theme);
+  $sitestyle = variable_get('mimemail_sitestyle', 1);
+  $mailstyles = file_scan_directory($themepath, '#^mail(-.+)?\.(c|le|sc|sa)ss$#');
+  $css_path = theme_get_setting('foundation_assets_css', $theme);
+  // Add external css if mimemail is set to include style sheets and
+  // no dedicated mail styles file exists in the theme.
+  if ($sitestyle && empty($mailstyles)) {
+    $vars['css'] = drupal_load_stylesheet($css_path);
+  }
+}
+
+/**
  * Implements hook_css_alter().
  *
  * Remove annoying Drupal core CSS files.
