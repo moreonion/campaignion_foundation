@@ -289,7 +289,7 @@ function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars)
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $exclude = ['webform.css', 'filter.css', 'recent-supporters.css'];
+  $exclude = ['webform.css', 'filter.css', 'recent-supporters.css', 'campaignion_overlay.css'];
   foreach ($css as $path => $values) {
     // Remove exclusion list and files where the name starts with "system"
     // (e.g. system.base.css).
@@ -305,7 +305,7 @@ function campaignion_foundation_css_alter(&$css) {
  * Remove annoying Drupal core JS files.
  */
 function campaignion_foundation_js_alter(&$js) {
-  $exclude = ['campaignion_language_switcher.js'];
+  $exclude = ['campaignion_language_switcher.js', 'campaignion_overlay.js'];
   foreach ($js as $path => $values) {
     if (in_array(basename($path), $exclude)) {
       unset($js[$path]);
