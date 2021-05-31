@@ -76,7 +76,7 @@
  * @see html.tpl.php
  */
 ?>
-  <div id="page" class="<?php print $layout ?? 'default'; ?>-layout">
+  <div id="page" class="<?php print drupal_clean_css_identifier($layout) ?? 'default'; ?>-layout">
 
     <section id="header">
       <div class="top-bar grid-container">
@@ -162,22 +162,17 @@
             <?php if ($layout === 'cover-2col'): ?></div><?php endif; ?>
           </div>
 
-          <?php if (empty($reversed)): ?>
-            <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
+          <?php if (empty($reversed) && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php if ($has_sidebar): ?>
               <div id="sidebar">
-                <?php if (!empty($page['sidebar_first'])): ?>
-                  <div id=form-wrapper class="flex-container align-middle">
-                    <div id="form-outer">
-                      <?php print render($page['sidebar_first']); ?>
-                    </div>
+                <div id=form-wrapper class="flex-container align-middle">
+                  <div id="form-outer">
+                    <?php print render($page['sidebar_first']); ?>
                   </div>
-                <?php endif; ?>
-                <?php if ($layout !== 'cover-2col'): ?>
-                  <?php print render($page['sidebar_second']); ?>
-                <?php endif; ?>
+                </div>
               </div>
 
-            <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php elseif ($is_narrow): ?>
               <div id="form-outer">
                 <?php print render($page['sidebar_first']); ?>
               </div>
@@ -191,11 +186,6 @@
                 <?php print render($page['content']); ?>
                 <?php print render($page['content_bottom']); ?>
               </div>
-              <?php if (!empty($page['sidebar_second'])): ?>
-              <div class="inner-wrapper">
-                <?php print render($page['sidebar_second']); ?>
-              </div>
-              <?php endif; ?>
 
             <?php else: ?>
               <?php print render($page['content_top']); ?>
@@ -204,32 +194,41 @@
             <?php endif; ?>
           </div>
 
-          <?php if (!empty($reversed)): ?>
-            <?php if ($has_sidebar && $layout !== 'cover-banner'): ?>
+          <?php if (!empty($reversed) && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php if ($has_sidebar): ?>
               <div id="sidebar">
-                <?php if (!empty($page['sidebar_first'])): ?>
-                  <div id=form-wrapper class="flex-container align-middle">
-                    <div id="form-outer">
-                      <?php print render($page['sidebar_first']); ?>
-                    </div>
+                <div id=form-wrapper class="flex-container align-middle">
+                  <div id="form-outer">
+                    <?php print render($page['sidebar_first']); ?>
                   </div>
-                <?php endif; ?>
-                <?php if ($layout !== 'cover-2col'): ?>
-                  <?php print render($page['sidebar_second']); ?>
-                <?php endif; ?>
+                </div>
               </div>
 
-            <?php elseif ($is_narrow && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
+            <?php elseif ($is_narrow): ?>
               <div id="form-outer">
                 <?php print render($page['sidebar_first']); ?>
               </div>
             <?php endif; ?>
           <?php endif; ?>
 
-          <?php if ($layout === 'cover-banner' && $has_sidebar): ?>
-          <div id="sidebar">
-            <?php print render($page['sidebar_second']); ?>
-          </div>
+          <?php if (!empty($page['sidebar_second'])): ?>
+            <?php if (in_array($layout, ['default', 'banner'])): ?>
+            <div id="sidebar2">
+              <?php print render($page['sidebar_second']); ?>
+            </div>
+
+            <?php elseif ($layout == 'cover-2col'): ?>
+            <div id="sidebar2">
+              <div class="inner-wrapper">
+                <?php print render($page['sidebar_second']); ?>
+              </div>
+            </div>
+
+            <?php elseif ($layout === 'cover-banner'): ?>
+            <div id="sidebar">
+              <?php print render($page['sidebar_second']); ?>
+            </div>
+            <?php endif; ?>
           <?php endif; ?>
 
         <?php if ($layout === 'cover-1col'): ?>
