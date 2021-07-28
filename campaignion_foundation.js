@@ -19,7 +19,11 @@ Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
             $error.addClass('callout alert');
           }
           else if ($input.val()) {
-            $input.closest('form').submit();
+            // Click (hidden) upload button.
+            // File events are bound to "mousedown", not "click".
+            // Make sure the button stays hidden.
+            $input.siblings('input.upload').mousedown().hide();
+            // Disable the visible button.
             $input.siblings('label.button').attr('disabled', 'disabled');
           }
         }, 100);

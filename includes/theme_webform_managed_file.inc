@@ -30,12 +30,17 @@ function campaignion_foundation_webform_managed_file(&$variables) {
   $element['upload']['#attributes']['class'][] = 'show-for-sr';
 
   // Hide Drupal upload button (files will be uploaded via JS).
-  $element['upload_button']['#access'] = FALSE;
+  $element['upload_button']['#attributes']['class'][] = 'upload';
+  $element['upload_button']['#attributes']['class'][] = 'element-hidden';
+  // Disable clientside validation.
+  $element['upload_button']['#attributes']['class'][] = 'cancel';
 
   // Styles for the remove button (only visible after submit).
   $element['remove_button']['#attributes']['class'][] = 'small';
   $element['remove_button']['#attributes']['class'][] = 'secondary';
   $element['remove_button']['#attributes']['class'][] = 'button';
+  // Disable clientside validation.
+  $element['remove_button']['#attributes']['class'][] = 'cancel';
 
   // Add attributes for fake file button.
   $element['#title'] = t('Choose file');
