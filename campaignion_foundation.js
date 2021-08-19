@@ -7,10 +7,28 @@
 // Theme specific JS.
 Drupal.behaviors.campaignion_foundation = {};
 Drupal.behaviors.campaignion_foundation.attach = function (context, settings) {
-  // Fix for file upload with AJAX enabled.
-  // See https://www.drupal.org/project/drupal/issues/1513200
-  if (Drupal.file) {
-    $('input.form-submit', context).unbind('mousedown', Drupal.file.disableFields);
+  // Upload managed files on forms immediately when selected.
+  if (settings.file && settings.file.elements) {
+    $.each(settings.file.elements, function(selector) {
+      $(selector, context).on('change', function() {
+        var $input = $(this);
+        // Wait for validation to finish.
+        setTimeout(function () {
+          var $error = $('.file-upload-js-error');
+          if ($error.length) {
+            $error.addClass('callout alert');
+          }
+          else if ($input.val()) {
+            // Click (hidden) upload button.
+            // File events are bound to "mousedown", not "click".
+            // Make sure the button stays hidden.
+            $input.siblings('input.upload').mousedown().hide();
+            // Disable the visible button.
+            $input.siblings('label.button').attr('disabled', 'disabled');
+          }
+        }, 100);
+      });
+    });
   }
 };
 
