@@ -4,8 +4,7 @@
  * @file
  * Display the progress bar for multipage forms.
  *
- * NB: Some variables are not used as we always want to display the page/step
- * number and page/step label. We also do not want to display percentages.
+ * NB: Some variables are not used because we do not want to display percentages.
  *
  * Available variables:
  * - $node: The webform node.

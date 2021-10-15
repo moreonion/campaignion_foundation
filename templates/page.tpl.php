@@ -64,11 +64,16 @@
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
  * - $page['highlighted']: Items for the highlighted content region.
+ * - $page['top']: Top content displayed before the main content.
+ * - $page['content_top']: The top part of the main content.
  * - $page['content']: The main content of the current page.
- * - $page['sidebar_first']: Items for the first sidebar.
- * - $page['sidebar_second']: Items for the second sidebar.
+ * - $page['content_bottom']: The bottom part of the main content.
+ * - $page['sidebar_first']: Items for the form region.
+ * - $page['sidebar_second']: Other items for the sidebar.
+ * - $page['bottom']: Items for the bottom content region.
  * - $page['header']: Items for the header region.
  * - $page['footer']: Items for the footer region.
+ * - $page['widget']: Items for the widget region.
  *
  * @see template_preprocess()
  * @see template_preprocess_page()
