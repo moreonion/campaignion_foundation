@@ -60,6 +60,8 @@
  * - $is_narrow: TRUE when the layout asks for a narrow grid.
  * - $reversed: TRUE when the layout supports displaying the form below the
  *   main content and it is enabled.
+ * - $highlighted_grid: "default, "narrow" or "off" to disable the grid in region highlighted.
+ * - $bottom_grid: "default, "narrow" or "off" to disable the grid in region bottom.
  *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.

@@ -60,6 +60,8 @@
  * - $is_narrow: TRUE when the layout asks for a narrow grid.
  * - $reversed: TRUE when the layout supports displaying the form below the
  *   main content and it is enabled.
+ * - $highlighted_grid: "default, "narrow" or "off" to disable the grid in region highlighted.
+ * - $bottom_grid: "default, "narrow" or "off" to disable the grid in region bottom.
  *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
@@ -103,9 +105,13 @@
 
     <?php if (!empty($page['highlighted'])): ?>
     <section id="highlighted">
-      <div class="grid-container">
+      <?php if ($highlighted_grid == 'off'): ?>
+      <?php print render($page['highlighted']); ?>
+      <?php else: ?>
+      <div class="grid-container<?php print ($highlighted_grid == 'narrow' ? ' narrow' : ''); ?>">
         <?php print render($page['highlighted']); ?>
       </div>
+      <?php endif; ?>
     </section>
     <?php endif; ?>
 
@@ -246,9 +252,13 @@
 
     <?php if (!empty($page['bottom'])): ?>
     <section id="bottom">
-      <div class="grid-container">
+      <?php if ($bottom_grid == 'off'): ?>
+      <?php print render($page['bottom']); ?>
+      <?php else: ?>
+      <div class="grid-container<?php print ($bottom_grid == 'narrow' ? ' narrow' : ''); ?>">
         <?php print render($page['bottom']); ?>
       </div>
+      <?php endif; ?>
     </section>
     <?php endif; ?>
 
