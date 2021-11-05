@@ -26,4 +26,31 @@ function campaignion_foundation_form_system_theme_settings_alter(&$form, $form_s
     '#default_value' => theme_get_setting('foundation_assets_js'),
     '#description'   => t('Link to your main JS file.'),
   ];
+  $form['grid_options'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Grid options'),
+    '#collapsible' => FALSE,
+  ];
+  $form['grid_options']['grid_options_highlighted'] = [
+    '#type'          => 'select',
+    '#title'         => t('Highlighted region'),
+    '#default_value' => theme_get_setting('grid_options_highlighted'),
+    '#description'   => t('Configure the grid width used in the highlighted region.'),
+    '#options' => [
+      'default' => t('Default grid'),
+      'narrow' => t('Narrow grid'),
+      'off' => t('No grid'),
+    ],
+  ];
+  $form['grid_options']['grid_options_bottom'] = [
+    '#type'          => 'select',
+    '#title'         => t('Bottom region'),
+    '#default_value' => theme_get_setting('grid_options_bottom'),
+    '#description'   => t('Configure the grid width used in the bottom region.'),
+    '#options' => [
+      'default' => t('Default grid'),
+      'narrow' => t('Narrow grid'),
+      'off' => t('No grid'),
+    ],
+  ];
 }

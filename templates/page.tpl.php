@@ -60,15 +60,22 @@
  * - $is_narrow: TRUE when the layout asks for a narrow grid.
  * - $reversed: TRUE when the layout supports displaying the form below the
  *   main content and it is enabled.
+ * - $highlighted_grid: "default, "narrow" or "off" to disable the grid in region highlighted.
+ * - $bottom_grid: "default, "narrow" or "off" to disable the grid in region bottom.
  *
  * Regions:
  * - $page['help']: Dynamic help text, mostly for admin pages.
  * - $page['highlighted']: Items for the highlighted content region.
+ * - $page['top']: Top content displayed before the main content.
+ * - $page['content_top']: The top part of the main content.
  * - $page['content']: The main content of the current page.
- * - $page['sidebar_first']: Items for the first sidebar.
- * - $page['sidebar_second']: Items for the second sidebar.
+ * - $page['content_bottom']: The bottom part of the main content.
+ * - $page['sidebar_first']: Items for the form region.
+ * - $page['sidebar_second']: Other items for the sidebar.
+ * - $page['bottom']: Items for the bottom content region.
  * - $page['header']: Items for the header region.
  * - $page['footer']: Items for the footer region.
+ * - $page['widget']: Items for the widget region.
  *
  * @see template_preprocess()
  * @see template_preprocess_page()
@@ -98,9 +105,13 @@
 
     <?php if (!empty($page['highlighted'])): ?>
     <section id="highlighted">
-      <div class="grid-container">
+      <?php if ($highlighted_grid == 'off'): ?>
+      <?php print render($page['highlighted']); ?>
+      <?php else: ?>
+      <div class="grid-container<?php print ($highlighted_grid == 'narrow' ? ' narrow' : ''); ?>">
         <?php print render($page['highlighted']); ?>
       </div>
+      <?php endif; ?>
     </section>
     <?php endif; ?>
 
@@ -241,9 +252,13 @@
 
     <?php if (!empty($page['bottom'])): ?>
     <section id="bottom">
-      <div class="grid-container">
+      <?php if ($bottom_grid == 'off'): ?>
+      <?php print render($page['bottom']); ?>
+      <?php else: ?>
+      <div class="grid-container<?php print ($bottom_grid == 'narrow' ? ' narrow' : ''); ?>">
         <?php print render($page['bottom']); ?>
       </div>
+      <?php endif; ?>
     </section>
     <?php endif; ?>
 

@@ -22,12 +22,15 @@ features[] = name
 features[] = favicon
 features[] = layout_variations
 features[] = foundation_assets
+features[] = grid_options
 
 settings[toggle_logo] = 1
 settings[toggle_name] = 1
 settings[toggle_favicon] = 1
 settings[foundation_assets_css] = 'https://assets.campaignion.org/foundist-demo/v1/main.css'
 settings[foundation_assets_js] = 'https://assets.campaignion.org/foundist-demo/v1/main.js'
+settings[grid_options_highlighted] = 'default'
+settings[grid_options_bottom] = 'default'
 
 ; Regions --------------------------------------------------------------------
 ; these content regions are available for block placement

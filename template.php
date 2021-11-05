@@ -110,6 +110,9 @@ function campaignion_foundation_preprocess_page(&$vars) {
   }
   $vars['has_sidebar'] = $has_sidebar && !$is_single_column;
   $vars['is_narrow'] = $is_single_column || (!$has_sidebar && !$has_teasers);
+  // Layout config variables.
+  $vars['highlighted_grid'] = theme_get_setting('grid_options_highlighted') ?? 'default';
+  $vars['bottom_grid'] = theme_get_setting('grid_options_bottom') ?? 'default';
 }
 
 /**
