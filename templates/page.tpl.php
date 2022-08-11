@@ -115,12 +115,6 @@
     </section>
     <?php endif; ?>
 
-    <?php if ($layout === 'banner' && !empty($background_image)): ?>
-    <section id="banner">
-      <?php print render($background_image); ?>
-    </section>
-    <?php endif; ?>
-
     <?php if (in_array($layout, ['cover-1col', 'cover-2col', 'cover-banner']) && !empty($background_image)): ?>
     <section id="background">
       <?php print render($background_image); ?>
@@ -132,6 +126,12 @@
       <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?>">
         <?php print $messages; ?>
       </div>
+    </section>
+    <?php endif; ?>
+
+    <?php if ($layout === 'banner' && !empty($background_image)): ?>
+    <section id="banner">
+      <?php print render($background_image); ?>
     </section>
     <?php endif; ?>
 
