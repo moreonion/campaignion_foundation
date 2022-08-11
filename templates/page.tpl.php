@@ -83,7 +83,7 @@
  * @see html.tpl.php
  */
 ?>
-  <div id="page" class="<?php print drupal_clean_css_identifier($layout) ?? 'default'; ?>-layout">
+  <div id="page" class="<?php print $page_classes ?>">
 
     <section id="header">
       <div class="top-bar grid-container">
@@ -137,7 +137,10 @@
 
     <?php if ($layout === 'cover-banner'): ?>
     <section id="banner-content">
-      <div class="grid-container with sidebar">
+      <div class="grid-container with-sidebar">
+        <?php if (!empty($headline)): ?>
+          <header id="headline"><?php print render($headline[0]['#markup']); ?></header>
+        <?php endif; ?>
         <?php if (!empty($page['sidebar_first'])): ?>
         <div id=form-wrapper class="flex-container align-middle">
           <div id="form-outer">
@@ -151,6 +154,10 @@
 
     <section id="main">
       <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?><?php print ($has_sidebar ? ' with-sidebar' : ''); ?>">
+
+        <?php if (in_array($layout, ['banner', 'cover-1col', 'cover-2col']) && !empty($headline)): ?>
+          <header id="headline"><?php print render($headline[0]['#markup']); ?></header>
+        <?php endif; ?>
 
         <?php if ($layout === 'cover-1col'): ?><div class="inner-wrapper"><?php endif; ?>
 
