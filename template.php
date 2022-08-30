@@ -38,6 +38,10 @@ function campaignion_foundation_campaignion_layout_info() {
         'variable' => 'background_image',
         'display' => [],
       ],
+      'layout_headline' => [
+        'variable' => 'headline',
+        'display' => [],
+      ],
     ],
     'reversable' => TRUE,
   ];
@@ -46,6 +50,10 @@ function campaignion_foundation_campaignion_layout_info() {
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
+        'display' => [],
+      ],
+      'layout_headline' => [
+        'variable' => 'headline',
         'display' => [],
       ],
     ],
@@ -58,6 +66,10 @@ function campaignion_foundation_campaignion_layout_info() {
         'variable' => 'background_image',
         'display' => [],
       ],
+      'layout_headline' => [
+        'variable' => 'headline',
+        'display' => [],
+      ],
     ],
   ];
   $info['cover-1col'] = [
@@ -65,6 +77,10 @@ function campaignion_foundation_campaignion_layout_info() {
     'fields' => [
       'layout_background_image' => [
         'variable' => 'background_image',
+        'display' => [],
+      ],
+      'layout_headline' => [
+        'variable' => 'headline',
         'display' => [],
       ],
     ],
@@ -113,6 +129,11 @@ function campaignion_foundation_preprocess_page(&$vars) {
   // Layout config variables.
   $vars['highlighted_grid'] = theme_get_setting('grid_options_highlighted') ?? 'default';
   $vars['bottom_grid'] = theme_get_setting('grid_options_bottom') ?? 'default';
+  // Page classes
+  $vars['page_classes'] = drupal_clean_css_identifier($vars['layout'] ?? 'default') . '-layout';
+  if (!empty($vars['headline'])) {
+    $vars['page_classes'] .= " with-headline";
+  }
 }
 
 /**
