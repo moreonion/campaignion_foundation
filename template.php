@@ -519,7 +519,7 @@ function _campaignion_foundation_pre_render_select($element) {
  * In this case the autocomplete handles initializing select2.
  */
 function _campaignion_foundation_process_autocomplete($element, &$form_state) {
-  $element['#attached']['js'][0]['data']['autocomplete_api']['elements'][$element['#id']]['select2']['theme'] = 'foundation';
+  $element['#attributes']['data-theme'] = 'foundation';
   return $element;
 }
 
