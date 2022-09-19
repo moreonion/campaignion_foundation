@@ -496,6 +496,9 @@ function campaignion_foundation_element_info_alter(&$type) {
     $type['select']['#pre_render'][] = '_campaignion_foundation_pre_render_select';
     $type['select']['#select_two'] = TRUE;
   }
+  if (isset($type['autocomplete_api_select'])) {
+    $type['autocomplete_api_select']['#process'][] = '_campaignion_foundation_process_autocomplete';
+  }
 }
 
 /**
@@ -507,6 +510,16 @@ function _campaignion_foundation_pre_render_select($element) {
   if ($element['#select_two']) {
     $element['#attributes']['data-select-two'] = "select-two";
   }
+  return $element;
+}
+
+/**
+ * Add theme option for autocomplete elements.
+ *
+ * In this case the autocomplete handles initializing select2.
+ */
+function _campaignion_foundation_process_autocomplete($element, &$form_state) {
+  $element['#attached']['js'][0]['data']['autocomplete_api']['elements'][$element['#id']]['select2']['theme'] = 'foundation';
   return $element;
 }
 
