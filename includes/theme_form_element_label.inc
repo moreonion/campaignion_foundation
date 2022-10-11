@@ -39,7 +39,15 @@ function campaignion_foundation_form_element_label($variables) {
   elseif ($element['#title_display'] == 'invisible') {
     $attributes['class'][] = 'element-invisible';
   }
-  if (!empty($element['#id'])) {
+
+  // Use the element's ID as the default value of the "for" attribute (to
+  // associate the label with this form element), but allow this to be
+  // overridden in order to associate the label with a different form element
+  // instead.
+  if (!empty($element['#label_for'])) {
+    $attributes['for'] = $element['#label_for'];
+  }
+  elseif (!empty($element['#id'])) {
     $attributes['for'] = $element['#id'];
   }
 
