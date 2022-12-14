@@ -162,7 +162,7 @@ function campaignion_foundation_preprocess_node(&$vars) {
         unset($link['attributes']['title']);
         // Replace button text per node type.
         $title_stripped = strip_tags($vars['title']);
-        if (in_array($vars['type'], ['webform', 'petition', 'email_to_target'])) {
+        if (in_array($vars['type'], ['webform', 'petition', 'email_to_target', 'match_to_target'])) {
           $link['title'] = t(
             'Take action<span class="show-for-sr"> on @title</span>',
             ['@title' => $title_stripped]
