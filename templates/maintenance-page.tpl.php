@@ -36,7 +36,7 @@
         <?php if ($logo): ?>
         <div class="top-bar-left">
           <a class="logo" href="<?php print $front_page; ?>" rel="home">
-            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+            <img src="<?php print $logo; ?>" alt="" />
           </a>
         </div>
         <?php endif; ?>
