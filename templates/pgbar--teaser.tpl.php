@@ -18,7 +18,7 @@
 
 ?>
 <div id="<?php print $html_id; ?>" class="pgbar-wrapper progress-wrapper" data-pgbar-current="<?php print $current; ?>" data-pgbar-target="<?php print $target; ?>">
-  <div class="progress" role="progressbar" tabindex="0" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress" role="progressbar" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100">
     <div class="progress-meter" style="width:<?php echo $percentage; ?>%"></div>
     <span class="progress-meter-text"><?php print $format_fn($current, 0); ?></span>
   </div>
