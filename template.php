@@ -478,8 +478,9 @@ function campaignion_foundation_payment_forms_payment_form_alter(&$element, \Pay
  * Implements hook_webform_component_render_alter().
  */
 function campaignion_foundation_webform_component_render_alter(&$element, $component) {
-  // Add extra classes for donation amount radios.
-  if ($element['#webform_component']['form_key'] == 'donation_amount') {
+  // Add donation button classes for various form keys.
+  $form_key = $element['#webform_component']['form_key'];
+  if (substr($form_key, 0, strlen('donation_amount')) === 'donation_amount') {
     if (in_array($element['#type'], ['radios', 'select_or_other'])) {
       $element['#wrapper_attributes']['class'][] = 'donation-amount';
       $element['#attributes']['class'][] = 'donation-amount-buttons';
