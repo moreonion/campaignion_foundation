@@ -25,7 +25,7 @@ $intro_message = format_string($goal_reached ? $texts['full_intro_message'] : $t
 $status_message = format_string($goal_reached ? $texts['full_status_message'] : $texts['status_message'], $vars) . "\n";
 ?>
 <div id="<?php print $html_id; ?>" class="pgbar-wrapper progress-wrapper flex-container" data-pgbar-current="<?php print $current; ?>" data-pgbar-target="<?php print $target; ?>" data-pgbar-direction="vertical">
-  <div class="progress thermometer" role="progressbar" tabindex="0" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress thermometer" role="meter" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100">
     <div class="pgbar-current progress-meter" style="height:<?php echo $percentage; ?>%"></div>
   </div>
   <div class="flex-container flex-dir-column align-justify">
