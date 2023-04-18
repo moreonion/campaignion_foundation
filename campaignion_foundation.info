@@ -57,3 +57,4 @@ stylesheets[screen][] = campaignion_foundation.css
 
 scripts[] = "js/jquery.webform-ajax-slide.js"
 scripts[] = campaignion_foundation.js
+scripts[] = js/clientside-validation-handlers.js
