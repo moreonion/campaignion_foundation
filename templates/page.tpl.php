@@ -85,7 +85,7 @@
 ?>
   <div id="page" class="<?php print $page_classes ?>">
 
-    <section id="header">
+    <header id="header">
       <div class="top-bar grid-container">
         <?php if ($logo): ?>
         <div class="top-bar-left">
@@ -101,7 +101,7 @@
           <?php print render($page['header']); ?>
         </div>
       </div>
-    </section>
+    </header>
 
     <?php if (!empty($page['highlighted'])): ?>
     <section id="highlighted">
@@ -152,7 +152,7 @@
     </section>
     <?php endif; ?>
 
-    <section id="main">
+    <main id="main">
       <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?><?php print ($has_sidebar ? ' with-sidebar' : ''); ?>">
 
         <?php if (in_array($layout, ['banner', 'cover-1col', 'cover-2col']) && !empty($headline)): ?>
@@ -255,7 +255,7 @@
         <?php endif; ?>
 
       </div>
-    </section>
+    </main>
 
     <?php if (!empty($page['bottom'])): ?>
     <section id="bottom">
@@ -272,9 +272,9 @@
   </div>
 
   <?php if (!empty($page['footer'])): ?>
-  <section id="footer">
+  <footer id="footer">
     <div class="grid-container">
       <?php print render($page['footer']); ?>
     </div>
-  </section>
+  </footer>
   <?php endif; ?>
