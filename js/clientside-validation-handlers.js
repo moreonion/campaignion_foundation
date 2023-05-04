@@ -43,7 +43,7 @@ $(document).on('clientsideValidationInvalid', function (event, element) {
     var $wrapper = findWrapper($(element));
     $(element).addClass('is-invalid-input');
     $wrapper.siblings('label').addClass('is-invalid-label');
-    $wrapper.siblings('.form-error[for=' + element.id + ']').addClass('is-visible');
+    $wrapper.siblings('.form-error[for="' + element.id + '"]').addClass('is-visible');
   }
 });
 $(document).on('clientsideValidationValid', function (event, element) {
@@ -51,7 +51,7 @@ $(document).on('clientsideValidationValid', function (event, element) {
     var $wrapper = findWrapper($(element));
     $(element).removeClass('is-invalid-input');
     $wrapper.siblings('label').removeClass('is-invalid-label');
-    $wrapper.siblings('.form-error[for=' + element.id + ']').removeClass('is-visible');
+    $wrapper.siblings('.form-error[for="' + element.id + '"]').removeClass('is-visible');
   }
 });
 
