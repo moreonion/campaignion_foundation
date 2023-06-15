@@ -113,6 +113,7 @@ function campaignion_foundation_preprocess_html(&$vars) {
  */
 function campaignion_foundation_preprocess_page(&$vars) {
   // Layout helper variables.
+  $vars['layout'] = $vars['layout'] ?? 'default';
   $is_single_column = in_array($vars['layout'], ['cover-1col']);
   $teaser_blocks = ['views_actions-block', 'views_actions_promoted-block'];
   $content_blocks = ($vars['page']['content_top'] ?? []) + ($vars['page']['content'] ?? []) + ($vars['page']['content_bottom'] ?? []);
@@ -130,7 +131,7 @@ function campaignion_foundation_preprocess_page(&$vars) {
   $vars['highlighted_grid'] = theme_get_setting('grid_options_highlighted') ?? 'default';
   $vars['bottom_grid'] = theme_get_setting('grid_options_bottom') ?? 'default';
   // Page classes
-  $vars['page_classes'] = drupal_clean_css_identifier($vars['layout'] ?? 'default') . '-layout';
+  $vars['page_classes'] = drupal_clean_css_identifier($vars['layout']) . '-layout';
   if (!empty($vars['headline'])) {
     $vars['page_classes'] .= " with-headline";
   }
