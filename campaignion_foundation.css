@@ -97,3 +97,12 @@ form.share-page .form-item-message-format {
 form.share-page textarea#edit-message-value {
   min-height: 18em;
 }
+
+/* Payment success messages displayed in the loading dummy. */
+.webform-ajax-slide-loading-dummy .payment-success {
+  text-align: center;
+}
+/* Hide messages in the form itself. JS pulls them into the dummy. */
+.webform-ajax-slide .payment-success {
+  display: none;
+}
