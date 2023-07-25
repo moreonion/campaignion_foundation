@@ -85,7 +85,7 @@
 ?>
   <div id="page" class="<?php print $page_classes ?>">
 
-    <header id="header">
+    <section id="header" role="banner">
       <div class="top-bar grid-container">
         <?php if ($logo): ?>
         <div class="top-bar-left">
@@ -101,7 +101,7 @@
           <?php print render($page['header']); ?>
         </div>
       </div>
-    </header>
+    </section>
 
     <?php if (!empty($page['highlighted'])): ?>
     <section id="highlighted">
@@ -152,7 +152,7 @@
     </section>
     <?php endif; ?>
 
-    <main id="main">
+    <section id="main" role="main">
       <div class="grid-container<?php print ($is_narrow ? ' narrow' : ''); ?><?php print ($has_sidebar ? ' with-sidebar' : ''); ?>">
 
         <?php if (in_array($layout, ['banner', 'cover-1col', 'cover-2col']) && !empty($headline)): ?>
@@ -182,7 +182,7 @@
 
           <?php if (empty($reversed) && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
             <?php if ($has_sidebar): ?>
-              <div id="sidebar">
+              <div id="sidebar" role="region">
                 <div id=form-wrapper class="flex-container align-middle">
                   <div id="form-outer">
                     <?php print render($page['sidebar_first']); ?>
@@ -214,7 +214,7 @@
 
           <?php if (!empty($reversed) && $layout !== 'cover-banner' && !empty($page['sidebar_first'])): ?>
             <?php if ($has_sidebar): ?>
-              <div id="sidebar">
+              <div id="sidebar" role="region">
                 <div id=form-wrapper class="flex-container align-middle">
                   <div id="form-outer">
                     <?php print render($page['sidebar_first']); ?>
@@ -243,7 +243,7 @@
             </div>
 
             <?php elseif ($layout === 'cover-banner'): ?>
-            <div id="sidebar">
+            <div id="sidebar" role="region">
               <?php print render($page['sidebar_second']); ?>
             </div>
             <?php endif; ?>
@@ -255,7 +255,7 @@
         <?php endif; ?>
 
       </div>
-    </main>
+    </section>
 
     <?php if (!empty($page['bottom'])): ?>
     <section id="bottom">
@@ -272,9 +272,9 @@
   </div>
 
   <?php if (!empty($page['footer'])): ?>
-  <footer id="footer">
+  <section id="footer" role="contentinfo">
     <div class="grid-container">
       <?php print render($page['footer']); ?>
     </div>
-  </footer>
+  </section>
   <?php endif; ?>
