@@ -22,7 +22,9 @@ function campaignion_foundation_status_messages($variables) {
     'warning' => ['heading' => t('Warning message'), 'class' => 'warning', 'role' => 'status'],
   ];
   foreach (drupal_get_messages($variables['display']) as $type => $messages) {
-    $output .= '<div class="callout ' . ($status[$type]['class'] ?? $type) . "\" data-closable role=\"" . $status[$type]['role'] . "\">\n";
+    $class = $status[$type]['class'] ?? $type;
+    $role = $status[$type]['role'] ?? 'status';
+    $output .= "<div class=\"callout ${class}\" role=\"${role}\" data-closable>\n";
     if (!empty($status[$type]['heading'])) {
       $output .= '<h2 class="show-for-sr">' . $status[$type]['heading'] . "</h2>\n";
     }
