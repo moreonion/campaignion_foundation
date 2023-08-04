@@ -436,7 +436,7 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   }
   ElementTree::applyRecursively($elements, function (&$element, $key, &$parent) {
     $element_types = ['radio', 'checkbox', 'radios', 'checkboxes'];
-    if (in_array($element['#type'] ?? '', $element_types)) {
+    if (in_array($element['#select_type'] ?? $element['#type'] ?? '', $element_types)) {
       $element['#wrapper_attributes']['class'][] = 'extra-spacing';
     }
   });
