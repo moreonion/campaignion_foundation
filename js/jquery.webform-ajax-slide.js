@@ -70,6 +70,12 @@
       // Set dummy dimensions to current container dimensions.
       $loadingdummy.css({height: $slide.height() + 'px', width: $slide.width() + 'px'});
 
+      // Fetch payment status messages if they exist.
+      $loadingdummy.find('.payment-success').remove();
+      ajax.form.find('.payment-success').each(function () {
+        $('<div class="payment-success form-label">').html($(this).html()).appendTo($loadingdummy);
+      });
+
       // Define the animation and it's "reverse".
       var anim = {},
         reverseAnim = {},
