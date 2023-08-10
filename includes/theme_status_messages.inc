@@ -17,12 +17,14 @@
 function campaignion_foundation_status_messages($variables) {
   $output = '';
   $status = [
-    'status'  => ['heading' => t('Status message'), 'class' => 'success'],
-    'error'   => ['heading' => t('Error message'), 'class' => 'alert'],
-    'warning' => ['heading' => t('Warning message'), 'class' => 'warning'],
+    'status'  => ['heading' => t('Status message'), 'class' => 'success', 'role' => 'status'],
+    'error'   => ['heading' => t('Error message'), 'class' => 'alert', 'role' => 'alert'],
+    'warning' => ['heading' => t('Warning message'), 'class' => 'warning', 'role' => 'status'],
   ];
   foreach (drupal_get_messages($variables['display']) as $type => $messages) {
-    $output .= '<div class="callout ' . ($status[$type]['class'] ?? $type) . "\" data-closable>\n";
+    $class = $status[$type]['class'] ?? $type;
+    $role = $status[$type]['role'] ?? 'status';
+    $output .= "<div class=\"callout ${class}\" role=\"${role}\" data-closable>\n";
     if (!empty($status[$type]['heading'])) {
       $output .= '<h2 class="show-for-sr">' . $status[$type]['heading'] . "</h2>\n";
     }

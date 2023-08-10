@@ -31,7 +31,7 @@
 
   <div id="page">
 
-    <section id="header">
+    <section id="header" role="banner">
       <div class="top-bar grid-container">
         <?php if ($logo): ?>
         <div class="top-bar-left">
@@ -46,7 +46,7 @@
       </div>
     </section>
 
-    <section id="main">
+    <section id="main" role="main">
       <div class="grid-container narrow">
         <div id="top">
           <?php if ($title): ?>
