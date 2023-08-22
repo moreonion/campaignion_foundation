@@ -130,7 +130,7 @@ function campaignion_foundation_preprocess_page(&$vars) {
   // Layout config variables.
   $vars['highlighted_grid'] = theme_get_setting('grid_options_highlighted') ?? 'default';
   $vars['bottom_grid'] = theme_get_setting('grid_options_bottom') ?? 'default';
-  // Page classes
+  // Page classes.
   $vars['page_classes'] = drupal_clean_css_identifier($vars['layout']) . '-layout';
   if (!empty($vars['headline'])) {
     $vars['page_classes'] .= " with-headline";
@@ -153,6 +153,12 @@ function campaignion_foundation_preprocess_node(&$vars) {
     $vars['footer_attributes_array']['class'][] = 'card-section';
     $vars['content']['links']['#attributes']['class'][] = 'no-bullet';
 
+    $action_types = [
+      'webform',
+      'petition',
+      'email_to_target',
+      'match_to_target',
+    ];
     foreach ($vars['content']['links']['node']['#links'] as $name => &$link) {
       foreach (['button', 'small'] as $class) {
         $link['attributes']['class'][] = $class;
@@ -163,7 +169,7 @@ function campaignion_foundation_preprocess_node(&$vars) {
         unset($link['attributes']['title']);
         // Replace button text per node type.
         $title_stripped = strip_tags($vars['title']);
-        if (in_array($vars['type'], ['webform', 'petition', 'email_to_target', 'match_to_target'])) {
+        if (in_array($vars['type'], $action_types)) {
           $link['title'] = t(
             'Take action<span class="show-for-sr"> on @title</span>',
             ['@title' => $title_stripped]
@@ -346,7 +352,12 @@ function campaignion_foundation_preprocess_mimemail_message(&$vars) {
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $exclude = ['webform.css', 'filter.css', 'recent-supporters.css', 'campaignion_overlay.css'];
+  $exclude = [
+    'webform.css',
+    'filter.css',
+    'recent-supporters.css',
+    'campaignion_overlay.css',
+  ];
   foreach ($css as $path => $values) {
     // Remove exclusion list and files where the name starts with "system"
     // (e.g. system.base.css).
