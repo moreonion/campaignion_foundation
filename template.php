@@ -267,6 +267,22 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
 }
 
 /**
+ * Prepares variables for the form element label.
+ */
+function campaignion_foundation_preprocess_form_element_label(&$variables) {
+  $element = &$variables['element'];
+  // Add button class for donation amount radios.
+  $is_donation_amount = function ($form_key) {
+    return substr($form_key, 0, strlen('donation_amount')) === 'donation_amount';
+  };
+  if (array_filter($element['#parents'], $is_donation_amount)) {
+    if ($element['#type'] === 'radio' && $element['#return_value'] !== 'select_or_other') {
+      $element['#label_attributes']['class'][] = 'button';
+    }
+  }
+}
+
+/**
  * Prepares variables for campaignion language switcher templates.
  */
 function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
@@ -482,8 +498,8 @@ function campaignion_foundation_webform_component_render_alter(&$element, $compo
   // Add donation button classes for various form keys.
   $form_key = $element['#webform_component']['form_key'];
   if (substr($form_key, 0, strlen('donation_amount')) === 'donation_amount') {
+    $element['#wrapper_attributes']['class'][] = 'donation-amount';
     if (in_array($element['#type'], ['radios', 'select_or_other'])) {
-      $element['#wrapper_attributes']['class'][] = 'donation-amount';
       $element['#attributes']['class'][] = 'donation-amount-buttons';
     }
   }
