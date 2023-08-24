@@ -273,9 +273,9 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
 }
 
 /**
- * Prepares variables for the form element label.
+ * Prepares variables for the form element.
  */
-function campaignion_foundation_preprocess_form_element_label(&$variables) {
+function campaignion_foundation_preprocess_form_element(&$variables) {
   $element = &$variables['element'];
   // Add button class for donation amount radios.
   $is_donation_amount = function ($form_key) {
@@ -284,6 +284,9 @@ function campaignion_foundation_preprocess_form_element_label(&$variables) {
   if (array_filter($element['#parents'], $is_donation_amount)) {
     if ($element['#type'] === 'radio' && $element['#return_value'] !== 'select_or_other') {
       $element['#label_attributes']['class'][] = 'button';
+    }
+    elseif ($element['#type'] === 'textfield' && in_array('other', $element['#parents'])) {
+      $element['#wrapper_attributes']['class'][] = 'donation-amount-other';
     }
   }
 }
