@@ -130,7 +130,7 @@ function campaignion_foundation_preprocess_page(&$vars) {
   // Layout config variables.
   $vars['highlighted_grid'] = theme_get_setting('grid_options_highlighted') ?? 'default';
   $vars['bottom_grid'] = theme_get_setting('grid_options_bottom') ?? 'default';
-  // Page classes
+  // Page classes.
   $vars['page_classes'] = drupal_clean_css_identifier($vars['layout']) . '-layout';
   if (!empty($vars['headline'])) {
     $vars['page_classes'] .= " with-headline";
@@ -153,6 +153,12 @@ function campaignion_foundation_preprocess_node(&$vars) {
     $vars['footer_attributes_array']['class'][] = 'card-section';
     $vars['content']['links']['#attributes']['class'][] = 'no-bullet';
 
+    $action_types = [
+      'webform',
+      'petition',
+      'email_to_target',
+      'match_to_target',
+    ];
     foreach ($vars['content']['links']['node']['#links'] as $name => &$link) {
       foreach (['button', 'small'] as $class) {
         $link['attributes']['class'][] = $class;
@@ -163,7 +169,7 @@ function campaignion_foundation_preprocess_node(&$vars) {
         unset($link['attributes']['title']);
         // Replace button text per node type.
         $title_stripped = strip_tags($vars['title']);
-        if (in_array($vars['type'], ['webform', 'petition', 'email_to_target', 'match_to_target'])) {
+        if (in_array($vars['type'], $action_types)) {
           $link['title'] = t(
             'Take action<span class="show-for-sr"> on @title</span>',
             ['@title' => $title_stripped]
@@ -267,6 +273,25 @@ function campaignion_foundation_preprocess_webform_form(&$vars) {
 }
 
 /**
+ * Prepares variables for the form element.
+ */
+function campaignion_foundation_preprocess_form_element(&$variables) {
+  $element = &$variables['element'];
+  // Add button class for donation amount radios.
+  $is_donation_amount = function ($form_key) {
+    return substr($form_key, 0, strlen('donation_amount')) === 'donation_amount';
+  };
+  if (array_filter($element['#parents'], $is_donation_amount)) {
+    if ($element['#type'] === 'radio' && $element['#return_value'] !== 'select_or_other') {
+      $element['#label_attributes']['class'][] = 'button';
+    }
+    elseif ($element['#type'] === 'textfield' && in_array('other', $element['#parents'])) {
+      $element['#wrapper_attributes']['class'][] = 'donation-amount-other';
+    }
+  }
+}
+
+/**
  * Prepares variables for campaignion language switcher templates.
  */
 function campaignion_foundation_preprocess_campaignion_language_switcher(&$vars) {
@@ -330,7 +355,12 @@ function campaignion_foundation_preprocess_mimemail_message(&$vars) {
  * Remove annoying Drupal core CSS files.
  */
 function campaignion_foundation_css_alter(&$css) {
-  $exclude = ['webform.css', 'filter.css', 'recent-supporters.css', 'campaignion_overlay.css'];
+  $exclude = [
+    'webform.css',
+    'filter.css',
+    'recent-supporters.css',
+    'campaignion_overlay.css',
+  ];
   foreach ($css as $path => $values) {
     // Remove exclusion list and files where the name starts with "system"
     // (e.g. system.base.css).
@@ -436,7 +466,7 @@ function campaignion_foundation_form_alter(&$form, $form_state, $form_id) {
   }
   ElementTree::applyRecursively($elements, function (&$element, $key, &$parent) {
     $element_types = ['radio', 'checkbox', 'radios', 'checkboxes'];
-    if (in_array($element['#type'] ?? '', $element_types)) {
+    if (in_array($element['#select_type'] ?? $element['#type'] ?? '', $element_types)) {
       $element['#wrapper_attributes']['class'][] = 'extra-spacing';
     }
   });
@@ -482,8 +512,8 @@ function campaignion_foundation_webform_component_render_alter(&$element, $compo
   // Add donation button classes for various form keys.
   $form_key = $element['#webform_component']['form_key'];
   if (substr($form_key, 0, strlen('donation_amount')) === 'donation_amount') {
+    $element['#wrapper_attributes']['class'][] = 'donation-amount';
     if (in_array($element['#type'], ['radios', 'select_or_other'])) {
-      $element['#wrapper_attributes']['class'][] = 'donation-amount';
       $element['#attributes']['class'][] = 'donation-amount-buttons';
     }
   }

@@ -5,6 +5,11 @@ name =  Impact Stack standard theme
 description = A base theme for using Foundation assets with Campaignion/Impact Stack.
 core = 7.x
 
+; Dependencies ---------------------------------------------------------------
+; need to be installed manually (Drupal 7 does not support theme dependencies)
+
+dependencies[] = theming
+
 ; Layouts --------------------------------------------------------------------
 ; available theme layouts
 

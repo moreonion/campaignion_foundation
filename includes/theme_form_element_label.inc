@@ -8,10 +8,9 @@
 /**
  * Returns HTML for a form element label.
  *
- * - Add label attributes.
  * - Wrap radio/checkbox labels in a `<span>`.
  *
- * See drupal/includes/form.inc.
+ * See drupal/includes/form.inc and theming/theming.theme.inc.
  */
 function campaignion_foundation_form_element_label($variables) {
   $element = $variables['element'];
