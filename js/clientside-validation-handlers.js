@@ -33,7 +33,7 @@ function findWrapper ($element) {
 $(document).on('clientsideValidationInitialized', function() {
   // Register custom error function with clientside validation.
   Drupal.myClientsideValidation['campaignion_foundation_errors'] = function (error, element) {
-    $(error).addClass('form-error is-visible').insertAfter(findWrapper($(element)));
+    $(error).addClass('form-error is-visible').attr('role', 'alert').insertAfter(findWrapper($(element)));
   }
 });
 
