@@ -9,7 +9,7 @@
  * Returns HTML for a webform time component.
  *
  * - Add class 'input-group' to wrapper.
- * - Add custom attribute '#input_group' on children.
+ * - Disable the <div> wrapper using '#wrapper_enabled' on children.
  * - Add custom attribute '#label_attributes' on children.
  * - Add input-group classes for child fields and labels.
  *
@@ -38,8 +38,8 @@ function campaignion_foundation_webform_time($variables) {
   }
 
   // Pass information from parent to children and set classes.
-  $element['hour']['#input_group'] = TRUE;
-  $element['minute']['#input_group'] = TRUE;
+  $element['hour']['#wrapper_enabled'] = FALSE;
+  $element['minute']['#wrapper_enabled'] = FALSE;
 
   $element['hour']['#attributes']['class'][] = 'input-group-field';
   $element['minute']['#attributes']['class'][] = 'input-group-field';

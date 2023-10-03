@@ -9,7 +9,7 @@
  * Returns HTML for a webform date component.
  *
  * - Add class 'input-group' to wrapper.
- * - Add custom attribute '#input_group' on children.
+ * - Disable the <div> wrapper using '#wrapper_enabled' on children.
  * - Add custom attribute '#label_attributes' on children.
  * - Add input-group classes for child fields and labels.
  *
@@ -37,9 +37,9 @@ function campaignion_foundation_webform_date($variables) {
   }
 
   // Pass information from parent to children and set classes.
-  $element['year']['#input_group'] = TRUE;
-  $element['month']['#input_group'] = TRUE;
-  $element['day']['#input_group'] = TRUE;
+  $element['year']['#wrapper_enabled'] = FALSE;
+  $element['month']['#wrapper_enabled'] = FALSE;
+  $element['day']['#wrapper_enabled'] = FALSE;
 
   $element['year']['#attributes']['class'][] = 'input-group-field';
   $element['month']['#attributes']['class'][] = 'input-group-field';
