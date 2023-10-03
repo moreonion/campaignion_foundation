@@ -9,7 +9,6 @@ use Drupal\little_helpers\ElementTree;
 
 include 'includes/theme_filter_guidelines.inc';
 include 'includes/theme_form_element.inc';
-include 'includes/theme_form_element_label.inc';
 include 'includes/theme_menu_local_tasks.inc';
 include 'includes/theme_pager.inc';
 include 'includes/theme_recent_supporters.inc';
@@ -288,6 +287,18 @@ function campaignion_foundation_preprocess_form_element(&$variables) {
     elseif ($element['#type'] === 'textfield' && in_array('other', $element['#parents'])) {
       $element['#wrapper_attributes']['class'][] = 'donation-amount-other';
     }
+  }
+}
+
+/**
+ * Preprocess variables for the form_element_label theme function.
+ *
+ * - Wrap radio/checkbox labels in a `<span>`.
+ */
+function campaignion_foundation_preprocess_form_element_label(&$variables) {
+  $element = &$variables['element'];
+  if ($element['#title_display'] == 'after') {
+    $element['#title'] = '<span>' . $element['#title'] . '</span>';
   }
 }
 
