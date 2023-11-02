@@ -103,6 +103,8 @@ function campaignion_foundation_preprocess_html(&$vars) {
     'scope' => 'footer',
     'group' => JS_THEME,
     'every_page' => TRUE,
+    'preprocess' => FALSE,
+    'attributes' => ['type' => 'module'],
   ]);
 }
 
