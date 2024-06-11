@@ -20,7 +20,6 @@
       slideClass: 'webform-ajax-slide',
       loadingDummyClass: 'webform-ajax-slide-loading-dummy',
       loadingDummyMsg: 'loading',
-      slideAcrossPage: false, // break out of the container
       slideSpeed: 0.9,        // px per millisecond
       onSlideFinished: function () {},
       onSlideBegin: function () {},
@@ -81,13 +80,13 @@
         reverseAnim = {},
         distance = 0;
       if (stepForward) {
-        distance = settings.slideAcrossPage ? $(window).width() - $container.offset().left : $slide.outerWidth() * -1.2;
+        distance = $slide.outerWidth() * -1.2;
         $loadingdummy.css({position: 'absolute', right: distance + 'px', left: ''});
         reverseAnim = {right: '0px'};
         $slide.css({position: 'relative', right: '', left: '0px'}); // one element needs position: relative
         anim = {left: distance + 'px'};
       } else {
-        distance = settings.slideAcrossPage ? $container.offset().left + $slide.outerWidth() : $slide.outerWidth() * -1.2;
+        distance = $slide.outerWidth() * -1.2;
         $loadingdummy.css({position: 'absolute', right: '', left: distance + 'px'});
         reverseAnim = {left: '0px'};
         $slide.css({position: 'relative', right: '0px', left: ''});
@@ -96,9 +95,7 @@
 
       // Do the slide!
       // Set container overflow to hidden to prevent overlapping.
-      if (!settings.slideAcrossPage) {
-        $container.css({overflow: 'hidden'});
-      }
+      $container.css({overflow: 'hidden'});
       // Move dummy in.
       $loadingdummy.show().animate(reverseAnim, Math.abs(distance / settings.slideSpeed));
       // Move container out.
@@ -116,15 +113,13 @@
       $slide.queue(function() {
         $slide.css({left: '', right: '', position: 'absolute', opacity: 0});
         $loadingdummy.css('position', 'relative');
-        if (!settings.slideAcrossPage) {
-          $container.css({overflow: 'visible'});
-        }
         // To the incoming slide.
         $loadingdummy.animate({height: $slide.height()}, 200, 'swing', function() {
           $slide.css('position', 'relative');
           $loadingdummy.css('position', 'absolute').fadeOut(400);
           $slide.animate({opacity: 1}, 400, function() {
             $loadingdummy.hide();
+            $container.css({overflow: 'visible'});
           }).dequeue();
         });
       });
