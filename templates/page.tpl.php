@@ -143,7 +143,7 @@
         <?php endif; ?>
         <?php if (!empty($page['sidebar_first'])): ?>
         <div id=form-wrapper class="flex-container align-middle">
-          <div id="form-outer">
+          <div id="form-outer" class="flex-child-auto">
             <?php print render($page['sidebar_first']); ?>
           </div>
         </div>
@@ -184,7 +184,7 @@
             <?php if ($has_sidebar): ?>
               <div id="sidebar" role="region">
                 <div id=form-wrapper class="flex-container align-middle">
-                  <div id="form-outer">
+                  <div id="form-outer" class="flex-child-auto">
                     <?php print render($page['sidebar_first']); ?>
                   </div>
                 </div>
@@ -216,7 +216,7 @@
             <?php if ($has_sidebar): ?>
               <div id="sidebar" role="region">
                 <div id=form-wrapper class="flex-container align-middle">
-                  <div id="form-outer">
+                  <div id="form-outer" class="flex-child-auto">
                     <?php print render($page['sidebar_first']); ?>
                   </div>
                 </div>
