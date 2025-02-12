@@ -118,6 +118,10 @@ function campaignion_foundation_d7csp_hosts_alter(&$hosts) {
     $hosts['font-src'][] = $host;
     $hosts['img-src'][] = $host;
   }
+  $js_path = theme_get_setting('foundation_assets_js');
+  if ($host = parse_url($js_path, PHP_URL_HOST)) {
+    $hosts['script-src'][] = $host;
+  }
   $hosts['img-src'][] = 'data:';
 }
 
