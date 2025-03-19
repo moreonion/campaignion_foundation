@@ -118,6 +118,7 @@ function campaignion_foundation_d7csp_hosts_alter(&$hosts) {
     $hosts['font-src'][] = $host;
     $hosts['img-src'][] = $host;
   }
+  $hosts['font-src'][] = 'data:';
   $hosts['img-src'][] = 'data:';
 }
 
