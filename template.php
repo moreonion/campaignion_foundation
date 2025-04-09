@@ -112,7 +112,7 @@ function campaignion_foundation_preprocess_html(&$vars) {
  * Implements hook_d7csp_hosts_alter().
  */
 function campaignion_foundation_d7csp_hosts_alter(&$hosts) {
-  $css_path = theme_get_setting('foundation_assets_css', 'campaignion_foundation');
+  $css_path = theme_get_setting('foundation_assets_css');
   if ($host = parse_url($css_path, PHP_URL_HOST)) {
     $hosts['style-src'][] = $host;
     $hosts['font-src'][] = $host;
