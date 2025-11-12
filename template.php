@@ -266,6 +266,11 @@ function campaignion_foundation_preprocess_file_entity(&$vars) {
   if ($key = array_search('contextual-links-region', $vars['classes_array'])) {
     unset($vars['classes_array'][$key]);
   }
+  // Remove heading for screen readers.
+  if (in_array('element-invisible', $vars['title_attributes_array']['class'] ?? [])) {
+    // Simple but hacky way to make file_entity.tpl.php not render the title.
+    $vars['page'] = TRUE;
+  }
 }
 
 /**
